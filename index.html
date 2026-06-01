@@ -1,1287 +1,419 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CarValueAI.in — India's #1 AI Car Valuation Platform</title>
-<meta name="description" content="Get instant AI-powered car valuation for any car in India. Free resale price for 35+ brands, 1000+ models, 150+ cities including Siliguri, Durgapur, Kolkata and more.">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#fff;color:#212121}
-.sr-only{position:absolute;left:-9999px}
-.navbar{background:#C62828;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:100}
-.logo{color:#fff;font-size:20px;font-weight:700;letter-spacing:-0.5px;cursor:pointer;text-decoration:none}
-.logo span{color:#FFD600}
-.nav-links{display:flex;gap:18px}
-.nav-links a{color:rgba(255,255,255,0.85);font-size:12px;cursor:pointer;text-decoration:none}
-.nav-links a:hover{color:#fff}
-.nav-cta{background:#fff;color:#C62828;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none}
-.trust-bar{background:#C62828;border-top:1px solid rgba(255,255,255,0.15);padding:8px 20px;display:flex;justify-content:center;align-items:center;gap:5px}
-.trust-item{color:rgba(255,255,255,0.9);font-size:11px;font-weight:600}
-.trust-item:not(:last-child)::after{content:"·";margin-left:5px;opacity:0.5}
-.trust-item i{font-size:15px;color:#FFD600}
-.hero{background:linear-gradient(135deg,#C62828 0%,#8B0000 60%,#212121 100%);padding:36px 20px 52px;text-align:center;color:#fff}
-.hero h1{font-size:28px;font-weight:700;margin-bottom:8px;line-height:1.3}
-.hero p{font-size:14px;opacity:0.88;margin-bottom:24px}
-.stats-row{display:flex;justify-content:center;gap:32px;margin-bottom:28px}
-.stat-num{font-size:22px;font-weight:700;color:#FFD600}
-.stat-lbl{font-size:11px;opacity:0.8;margin-top:1px}
-.search-box{background:#fff;border-radius:14px;padding:22px;max-width:700px;margin:0 auto;box-shadow:0 8px 40px rgba(0,0,0,0.4)}
-.stitle{font-size:13px;font-weight:700;color:#212121;margin-bottom:16px;text-align:left}
-.step-tabs{display:flex;gap:9px;margin-bottom:16px;border:1px solid #E0E0E0;border-radius:8px;overflow:hidden}
-.step-tab{flex:1;padding:9px;text-align:center;font-size:11px;font-weight:700;cursor:pointer;border:none;background:#F5F5F5;color:#888;transition:all 0.2s}
-.step-tab.active{background:#C62828;color:#fff}
-.step-tab.done{background:#E8F5E9;color:#2E7D32}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.frow2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.frow1{margin-bottom:10px}
-select,input[type=text],input[type=tel],input[type=email]{width:100%;padding:10px;border:1px solid #E0E0E0;border-radius:7px;font-size:13px;color:#212121;background:#fff;appearance:none;-webkit-appearance:none}
-select:focus,input:focus{outline:2px solid #C62828;border-color:#C62828}
-.flabel{font-size:11px;color:#666;margin-bottom:4px;font-weight:600}
-.fuel-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.fuel-btn{flex:1;min-width:60px;padding:8px 4px;border:1.5px solid #E0E0E0;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:#555;text-align:center;transition:all 0.2s}
-.fuel-btn.active{border-color:#C62828;background:#FFF5F5;color:#C62828}
-.owner-row{display:flex;gap:8px;margin-bottom:10px}
-.owner-btn{flex:1;padding:8px 4px;border:1.5px solid #E0E0E0;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#555;text-align:center;transition:all 0.2s}
-.owner-btn.active{border-color:#C62828;background:#FFF5F5;color:#C62828}
-.city-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-.city-chip{padding:5px 12px;border:1.5px solid #E0E0E0;border-radius:20px;font-size:11px;cursor:pointer;font-weight:600;color:#555;transition:all 0.2s}
-.city-chip.active{border-color:#C62828;background:#C62828;color:#fff}
-.btn-next{width:100%;background:#C62828;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:10px;transition:background 0.2s}
-.btn-next:hover{background:#B71C1C}
-.btn-back{background:#f5f5f5;color:#555;border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-right:8px}
-.cond-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.cond-card{border:1.5px solid #E0E0E0;border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all 0.2s}
-.cond-card.active{border-color:#C62828;background:#FFF5F5}
-.cond-card .icon{font-size:22px;margin-bottom:4px}
-.cond-card .ctitle{font-size:12px;font-weight:700;color:#212121}
-.cond-card .csub{font-size:10px;color:#888}
-.acc-row,.svc-row,.ins-row,.loan-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.tog-btn{padding:7px 12px;border:1.5px solid #E0E0E0;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#555;transition:all 0.2s;white-space:nowrap}
-.tog-btn.active{border-color:#C62828;background:#FFF5F5;color:#C62828}
-.result-box{background:#fff;border-radius:14px;padding:22px;max-width:700px;margin:16px auto 0;box-shadow:0 8px 40px rgba(0,0,0,0.4)}
-.res-badge{display:inline-block;background:#E8F5E9;color:#2E7D32;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px}
-.res-car-name{font-size:18px;font-weight:700;color:#212121;margin-bottom:4px}
-.res-sub{font-size:12px;color:#888;margin-bottom:16px}
-.res-price{text-align:center;background:linear-gradient(135deg,#FFF8E1,#FFF3E0);border-radius:12px;padding:18px;margin-bottom:14px}
-.res-price-label{font-size:12px;color:#888;margin-bottom:4px}
-.res-price-val{font-size:28px;font-weight:800;color:#C62828}
-.res-price-basis{font-size:11px;color:#888;margin-top:4px}
-.res-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
-.res-stat{background:#F5F5F5;border-radius:8px;padding:10px;text-align:center}
-.res-stat-val{font-size:15px;font-weight:700;color:#212121}
-.res-stat-lbl{font-size:10px;color:#888;margin-top:2px}
-.res-btns{display:flex;gap:8px}
-.btn-sell{flex:1;background:#C62828;color:#fff;border:none;padding:12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
-.btn-pdf{flex:1;background:#fff;color:#C62828;border:2px solid #C62828;padding:12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
-.payment-section{display:none;margin-top:20px;padding:22px;background:#fff7ed;border:1.5px solid #f97316;border-radius:14px;text-align:center}
-.payment-section h3{font-size:18px;color:#7c2d12;margin-bottom:6px}
-.payment-section p{font-size:12px;color:#78716c;margin-bottom:14px}
-.payment-features{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
-.payment-features span{font-size:12px;color:#15803d;font-weight:600}
-.btn-pay{background:#f97316;color:#fff;border:none;padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;width:100%;max-width:320px}
-.payment-note{font-size:11px;color:#a8a29e;margin-top:8px}
-.step-content{display:none}
-.step-content.active{display:block}
-.km-row{margin-bottom:10px}
-.km-val{font-size:13px;font-weight:700;color:#C62828;margin-bottom:4px}
-input[type=range]{width:100%;accent-color:#C62828}
-.trans-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.color-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-.color-dot{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid #E0E0E0;transition:all 0.2s}
-.color-dot.active{border:3px solid #C62828;transform:scale(1.2)}
-section.features{padding:36px 20px;background:#FAFAFA}
-section.features h2{text-align:center;font-size:22px;font-weight:700;color:#212121;margin-bottom:24px}
-.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:700px;margin:0 auto}
-.feat-card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
-.feat-icon{font-size:24px;margin-bottom:8px;color:#C62828}
-.feat-title{font-size:13px;font-weight:700;color:#212121;margin-bottom:4px}
-.feat-desc{font-size:11px;color:#666;line-height:1.5}
-.reviews{padding:32px 20px;background:#fff}
-.reviews h2{text-align:center;font-size:20px;font-weight:700;margin-bottom:20px}
-.rev-grid{display:grid;grid-template-columns:1fr;gap:12px;max-width:700px;margin:0 auto}
-.rev-card{background:#FFF8E1;border-radius:12px;padding:16px;border-left:4px solid #C62828}
-.rev-stars{color:#FFD600;font-size:14px;margin-bottom:6px}
-.rev-text{font-size:12px;color:#333;line-height:1.6;margin-bottom:8px;font-style:italic}
-.rev-author{font-size:11px;font-weight:700;color:#C62828}
-.rev-loc{font-size:10px;color:#888}
-footer{background:#212121;color:#fff;padding:28px 20px;text-align:center}
-footer p{font-size:11px;opacity:0.6;margin-top:8px}
-.whatsapp-fab{position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,0.3);z-index:999}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarValueAI.in — India's #1 AI Car Valuation Platform</title>
+    <meta name="description" content="Get instant AI-powered car valuation for any car in India. Free resale price for 35+ brands, 1000+ models, 150+ cities including Siliguri, Durgapur, Kolkata and more.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #fff; color: #212121; }
+        
+        .navbar { background: #C62828; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 58px; position: sticky; top: 0; z-index: 100; }
+        .logo { color: #fff; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; cursor: pointer; text-decoration: none; }
+        .logo span { color: #FFD600; }
+        .nav-links { display: flex; gap: 18px; }
+        .nav-links a { color: rgba(255,255,255,0.85); font-size: 12px; text-decoration: none; }
+        .nav-links a:hover { color: #fff; }
+        .nav-cta { background: #fff; color: #C62828; padding: 7px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; }
+        
+        .trust-bar { background: #C62828; border-top: 1px solid rgba(255,255,255,0.15); padding: 8px 20px; display: flex; justify-content: center; align-items: center; gap: 5px; flex-wrap: wrap; }
+        .trust-item { color: rgba(255,255,255,0.9); font-size: 11px; font-weight: 600; }
+        .trust-item:not(:last-child)::after { content: "·"; margin-left: 5px; opacity: 0.5; }
+        .trust-item i { font-size: 15px; color: #FFD600; }
+        
+        .hero { background: linear-gradient(135deg, #C62828 0%, #8B0000 60%, #212121 100%); padding: 36px 20px 52px; text-align: center; color: #fff; }
+        .hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+        .hero p { font-size: 14px; opacity: 0.88; margin-bottom: 24px; }
+        
+        .stats-row { display: flex; justify-content: center; gap: 32px; margin-bottom: 28px; }
+        .stat-num { font-size: 22px; font-weight: 700; color: #FFD600; }
+        .stat-lbl { font-size: 11px; opacity: 0.8; margin-top: 1px; }
+        
+        .search-box { background: #fff; border-radius: 14px; padding: 22px; max-width: 700px; margin: 0 auto; box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
+        .stitle { font-size: 13px; font-weight: 700; color: #212121; margin-bottom: 16px; text-align: left; }
+        
+        .step-tabs { display: flex; gap: 9px; margin-bottom: 16px; border: 1px solid #E0E0E0; border-radius: 8px; overflow: hidden; }
+        .step-tab { flex: 1; padding: 9px; text-align: center; font-size: 11px; font-weight: 700; background: #F5F5F5; color: #888; border: none; }
+        .step-tab.active { background: #C62828; color: #fff; }
+        
+        .step-content { display: none; text-align: left; }
+        .step-content.active { display: block; }
+        
+        .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .flabel { font-size: 11px; color: #666; margin-bottom: 4px; font-weight: 600; }
+        
+        select, input[type=text], input[type=tel] { width: 100%; padding: 10px; border: 1px solid #E0E0E0; border-radius: 7px; font-size: 13px; color: #212121; background: #fff; }
+        select:disabled { background: #f5f5f5; color: #aaa; cursor: not-allowed; }
+        
+        .fuel-row, .owner-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+        .fuel-btn, .owner-btn { flex: 1; min-width: 65px; padding: 8px 4px; border: 1.5px solid #E0E0E0; border-radius: 7px; font-size: 11px; font-weight: 600; cursor: pointer; background: #fff; color: #555; text-align: center; }
+        .fuel-btn.active, .owner-btn.active { border-color: #C62828; background: #FFF5F5; color: #C62828; }
+        
+        .km-row { margin-bottom: 14px; }
+        .km-val { font-size: 13px; font-weight: 700; color: #C62828; margin-bottom: 4px; }
+        input[type=range] { width: 100%; accent-color: #C62828; }
+        
+        .city-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+        .city-chip { padding: 5px 12px; border: 1.5px solid #E0E0E0; border-radius: 20px; font-size: 11px; cursor: pointer; font-weight: 600; color: #555; }
+        .city-chip.active { border-color: #C62828; background: #C62828; color: #fff; }
+        
+        .cond-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+        .cond-card { border: 1.5px solid #E0E0E0; border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; }
+        .cond-card.active { border-color: #C62828; background: #FFF5F5; }
+        .cond-card .icon { font-size: 22px; margin-bottom: 4px; }
+        .cond-card .ctitle { font-size: 12px; font-weight: 700; color: #212121; }
+        .cond-card .csub { font-size: 10px; color: #888; }
+        
+        .btn-next { width: 100%; background: #C62828; color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        .btn-next:hover { background: #B71C1C; }
+        .btn-back { background: #f5f5f5; color: #555; border: none; padding: 12px 22px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; margin-right: 8px; }
+        
+        /* RESULT SECTION */
+        .result-box { display: none; background: #fff; border-radius: 14px; padding: 22px; max-width: 700px; margin: 24px auto 0; box-shadow: 0 8px 40px rgba(0,0,0,0.4); text-align: center; }
+        .res-badge { display: inline-block; background: #E8F5E9; color: #2E7D32; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+        .res-car-name { font-size: 18px; font-weight: 700; color: #212121; margin-bottom: 4px; }
+        .res-price { background: linear-gradient(135deg, #FFF8E1, #FFF3E0); border-radius: 12px; padding: 18px; margin-bottom: 14px; }
+        .res-price-val { font-size: 28px; font-weight: 800; color: #C62828; }
+        .btn-pdf { width: 100%; background: #fff; color: #C62828; border: 2px solid #C62828; padding: 12px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-pdf:hover { background: #FFF5F5; }
+        
+        .payment-section { display: none; margin-top: 20px; padding: 22px; background: #fff7ed; border: 1.5px solid #f97316; border-radius: 14px; }
+        .payment-section h3 { font-size: 16px; color: #7c2d12; margin-bottom: 6px; }
+        .payment-section p { font-size: 12px; color: #78716c; margin-bottom: 14px; }
+        .btn-pay { background: #f97316; color: #fff; border: none; padding: 14px 32px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; max-width: 320px; }
+        
+        footer { background: #212121; color: #fff; padding: 28px 20px; text-align: center; font-size: 12px; margin-top: 40px; }
+        footer a { color: #cbd5e1; text-decoration: none; margin: 0 10px; opacity: 0.8; }
+        footer a:hover { opacity: 1; text-decoration: underline; }
+        footer p { font-size: 11px; opacity: 0.5; margin-top: 12px; }
+        
+        .whatsapp-fab { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: #fff; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.3); z-index: 999; }
+    </style>
 </head>
 <body>
 
 <nav class="navbar">
-  <a class="logo" href="#">CarValue<span>AI</span>.in</a>
-  <div class="nav-links">
-    <a href="#">Sell Car</a>
-    <a href="#">Buy Used</a>
-    <a href="#">Loans</a>
-    <a href="#">Insurance</a>
-  </div>
-  <button class="nav-cta">List Free</button>
+    <a class="logo" href="#">CarValue<span>AI</span>.in</a>
+    <div class="nav-links">
+        <a href="#">Sell Car</a>
+        <a href="#">Buy Used</a>
+        <a href="#">Premium Reports</a>
+    </div>
+    <button class="nav-cta">List Free</button>
 </nav>
 
 <div class="trust-bar">
-  <span class="trust-item"><i class="ti ti-check"></i> 100% Free</span>
-  <span class="trust-item"><i class="ti ti-bolt"></i> 30-Second Result</span>
-  <span class="trust-item"><i class="ti ti-map-pin"></i> 150+ Cities</span>
-  <span class="trust-item"><i class="ti ti-car"></i> 35+ Brands</span>
-  <span class="trust-item"><i class="ti ti-star"></i> 4.8/5 Rating</span>
+    <span class="trust-item"><i class="ti ti-check"></i> 100% Free Search</span>
+    <span class="trust-item"><i class="ti ti-bolt"></i> 30-Second AI Valuation</span>
+    <span class="trust-item"><i class="ti ti-map-pin"></i> 150+ Cities Support</span>
+    <span class="trust-item"><i class="ti ti-star"></i> OBV & Cars24 Benchmarked</span>
 </div>
 
 <section class="hero">
-  <p style="font-size:12px;background:rgba(255,255,255,0.15);display:inline-block;padding:4px 12px;border-radius:20px;margin-bottom:12px">⚡ India's #1 AI Car Valuation — Trusted by 50 Lakh+ Users</p>
-  <h1>Know Your Car's True Market Value<br>Before You Sell — <span style="color:#FFD600">Instantly Free</span></h1>
-  <p>From Siliguri to Mumbai — accurate resale price for every car, every city in India</p>
-  <div class="stats-row">
-    <div><div class="stat-num">50L+</div><div class="stat-lbl">Valuations</div></div>
-    <div><div class="stat-num">35+</div><div class="stat-lbl">Car Brands</div></div>
-    <div><div class="stat-num">1000+</div><div class="stat-lbl">Models</div></div>
-    <div><div class="stat-num">150+</div><div class="stat-lbl">Cities</div></div>
-  </div>
-
-  <!-- VALUATION FORM -->
-  <div class="search-box">
-    <div class="stitle">🚗 Get Free Car Valuation Now — Instant & Accurate</div>
-    <div class="step-tabs">
-      <button class="step-tab active" id="tab1">1. Car Details</button>
-      <button class="step-tab" id="tab2">2. Condition</button>
-      <button class="step-tab" id="tab3">3. Contact</button>
+    <h1>Know Your Car's True Market Value<br>Before You Sell — <span style="color:#FFD600">Instantly Free</span></h1>
+    <p>AI-driven computational accuracy for Indian used car market prices.</p>
+    
+    <div class="stats-row">
+        <div><div class="stat-num">50L+</div><div class="stat-lbl">Valuations</div></div>
+        <div><div class="stat-num">35+</div><div class="stat-lbl">Brands</div></div>
+        <div><div class="stat-num">150+</div><div class="stat-lbl">Cities</div></div>
     </div>
 
-    <!-- STEP 1 -->
-    <div class="step-content active" id="step1">
-      <div class="frow">
-        <div>
-          <div class="flabel">Brand</div>
-          <select id="brandSelect" onchange="onBrandChange()">
-            <option value="">Select Brand</option>
-            <option>Maruti Suzuki</option>
-            <option>Hyundai</option>
-            <option>Tata Motors</option>
-            <option>Mahindra</option>
-            <option>Honda</option>
-            <option>Toyota</option>
-            <option>Kia</option>
-            <option>Skoda</option>
-            <option>Volkswagen</option>
-            <option>MG Motor</option>
-            <option>Renault</option>
-            <option>Nissan</option>
-            <option>Ford</option>
-            <option>Jeep</option>
-            <option>BMW</option>
-            <option>Mercedes-Benz</option>
-            <option>Audi</option>
-            <option>BYD</option>
-            <option>Ola Electric</option>
-          </select>
+    <!-- MAIN APP WIZARD -->
+    <div class="search-box">
+        <div class="stitle">🚗 AI Engine Initialization Grid</div>
+        <div class="step-tabs">
+            <button class="step-tab active" id="tab1">1. Car Parameters</button>
+            <button class="step-tab" id="tab2">2. Condition matrix</button>
+            <button class="step-tab" id="tab3">3. Verification</button>
         </div>
-        <div>
-          <div class="flabel">Model</div>
-          <select id="modelSelect" onchange="onModelChange()">
-            <option value="">Select Model</option>
-          </select>
+
+        <!-- STEP 1: CAR CORE DATA -->
+        <div class="step-content active" id="step1">
+            <div class="frow">
+                <div>
+                    <div class="flabel">Select Brand/Make</div>
+                    <select id="brandSelect" onchange="onBrandChange()">
+                        <option value="">-- Choose Brand --</option>
+                        <option value="Maruti Suzuki">Maruti Suzuki</option>
+                        <option value="Hyundai">Hyundai</option>
+                        <option value="Tata Motors">Tata Motors</option>
+                        <option value="Mahindra">Mahindra</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="flabel">Model (Select Brand First)</div>
+                    <select id="modelSelect" onchange="onModelChange()" disabled>
+                        <option value="">-- Choose Model --</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="frow">
+                <div>
+                    <div class="flabel">Trim/Variant</div>
+                    <select id="variantSelect" disabled>
+                        <option value="">-- Choose Variant --</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="flabel">Registration Year</div>
+                    <select id="yearSelect">
+                        <option value="">-- Choose Year --</option>
+                        <option value="2025">2025</option><option value="2024">2024</option>
+                        <option value="2023">2023</option><option value="2022">2022</option>
+                        <option value="2021">2021</option><option value="2020">2020</option>
+                        <option value="2019">2019</option><option value="2018">2018</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flabel">Fuel Category</div>
+            <div class="fuel-row" id="fuelRow">
+                <button class="fuel-btn active" onclick="selectFuel(this,'Petrol')">⛽ Petrol</button>
+                <button class="fuel-btn" onclick="selectFuel(this,'Diesel')">🛢️ Diesel</button>
+                <button class="fuel-btn" onclick="selectFuel(this,'CNG')">🟢 CNG</button>
+                <button class="fuel-btn" onclick="selectFuel(this,'Electric')">⚡ Electric</button>
+            </div>
+
+            <div class="flabel">Ownership State</div>
+            <div class="owner-row" id="ownerRow">
+                <button class="owner-btn active" onclick="selectOwner(this,1)">1st Owner</button>
+                <button class="owner-btn" onclick="selectOwner(this,2)">2nd Owner</button>
+                <button class="owner-btn" onclick="selectOwner(this,3)">3rd Owner</button>
+            </div>
+
+            <div class="flabel">Kilometres Metric</div>
+            <div class="km-row">
+                <div class="km-val" id="kmVal">35,000 km</div>
+                <input type="range" min="5000" max="200000" step="5000" value="35000" oninput="updateKm(this.value)">
+            </div>
+
+            <div class="flabel">Evaluation Hub Location</div>
+            <div class="city-chips">
+                <span class="city-chip active" onclick="selectCity(this,'Delhi NCR')">Delhi NCR</span>
+                <span class="city-chip" onclick="selectCity(this,'Mumbai')">Mumbai</span>
+                <span class="city-chip" onclick="selectCity(this,'Kolkata')">Kolkata</span>
+                <span class="city-chip" onclick="selectCity(this,'Siliguri')">Siliguri</span>
+                <span class="city-chip" onclick="selectCity(this,'Durgapur')">Durgapur</span>
+            </div>
+
+            <button class="btn-next" onclick="goToStep(2)">Proceed to Matrix Parameters →</button>
         </div>
-      </div>
-      <div class="frow">
-        <div>
-          <div class="flabel">Variant</div>
-          <select id="variantSelect">
-            <option value="">Select Variant</option>
-          </select>
+
+        <!-- STEP 2: CONDITIONS -->
+        <div class="step-content" id="step2">
+            <div class="flabel" style="margin-bottom:8px">Visual & Mechanical Grading</div>
+            <div class="cond-cards">
+                <div class="cond-card active" onclick="selectCond(this,'Excellent')"><div class="icon">✨</div><div class="ctitle">Excellent</div><div class="csub">Flawless paint & engine</div></div>
+                <div class="cond-card" onclick="selectCond(this,'Good')"><div class="icon">👍</div><div class="ctitle">Good</div><div class="csub">Minor scratches, clean internals</div></div>
+                <div class="cond-card" onclick="selectCond(this,'Fair')"><div class="icon">🔧</div><div class="ctitle">Fair</div><div class="csub">Needs body work or servicing</div></div>
+                <div class="cond-card" onclick="selectCond(this,'Poor')"><div class="icon">😐</div><div class="ctitle">Poor</div><div class="csub">Major mechanical recovery required</div></div>
+            </div>
+            
+            <div style="display: flex; margin-top: 20px;">
+                <button class="btn-back" onclick="goToStep(1)">← Back</button>
+                <button class="btn-next" style="margin:0; flex:1;" onclick="goToStep(3)">Verify User Verification →</button>
+            </div>
         </div>
-        <div>
-          <div class="flabel">Year of Registration</div>
-          <select id="yearSelect">
-            <option value="">Select Year</option>
-            <option>2025</option><option>2024</option><option>2023</option>
-            <option>2022</option><option>2021</option><option>2020</option>
-            <option>2019</option><option>2018</option><option>2017</option>
-            <option>2016</option><option>2015</option><option>2014</option>
-            <option>2013</option><option>2012</option><option>2011</option>
-            <option>2010</option><option>2009</option><option>2008</option>
-          </select>
+
+        <!-- STEP 3: VERIFICATION -->
+        <div class="step-content" id="step3">
+            <div class="frow">
+                <div>
+                    <div class="flabel">Full Legal Name</div>
+                    <input type="text" id="userName" placeholder="Enter full name">
+                </div>
+                <div>
+                    <div class="flabel">Mobile Contact String</div>
+                    <input type="tel" id="userPhone" placeholder="10-Digit Active Line">
+                </div>
+            </div>
+            
+            <div style="display: flex; margin-top: 20px;">
+                <button class="btn-back" onclick="goToStep(2)">← Back</button>
+                <button class="btn-next" style="margin:0; flex:1;" onclick="calculateValuation()">Execute AI Assessment Engine 🔍</button>
+            </div>
         </div>
-      </div>
-      <div class="flabel">Fuel Type</div>
-      <div class="fuel-row" id="fuelRow">
-        <button class="fuel-btn active" onclick="selectFuel(this,'Petrol')">⛽ Petrol</button>
-        <button class="fuel-btn" onclick="selectFuel(this,'Diesel')">🛢️ Diesel</button>
-        <button class="fuel-btn" onclick="selectFuel(this,'CNG')">🟢 CNG</button>
-        <button class="fuel-btn" onclick="selectFuel(this,'Electric')">⚡ Electric</button>
-        <button class="fuel-btn" onclick="selectFuel(this,'Hybrid')">🌿 Hybrid</button>
-      </div>
-      <div class="flabel">No. of Owners</div>
-      <div class="owner-row" id="ownerRow">
-        <button class="owner-btn active" onclick="selectOwner(this,1)">1st Owner</button>
-        <button class="owner-btn" onclick="selectOwner(this,2)">2nd Owner</button>
-        <button class="owner-btn" onclick="selectOwner(this,3)">3rd Owner</button>
-        <button class="owner-btn" onclick="selectOwner(this,4)">4th+ Owner</button>
-      </div>
-      <div class="flabel">Kilometres Driven</div>
-      <div class="km-row">
-        <div class="km-val" id="kmVal">40,000 km</div>
-        <input type="range" min="0" max="300000" step="5000" value="40000" oninput="updateKm(this.value)">
-      </div>
-      <div class="flabel">Quick Select City</div>
-      <div class="city-chips" id="cityChips">
-        <span class="city-chip active" onclick="selectCity(this,'Delhi NCR')">Delhi NCR</span>
-        <span class="city-chip" onclick="selectCity(this,'Mumbai')">Mumbai</span>
-        <span class="city-chip" onclick="selectCity(this,'Bangalore')">Bangalore</span>
-        <span class="city-chip" onclick="selectCity(this,'Kolkata')">Kolkata</span>
-        <span class="city-chip" onclick="selectCity(this,'Siliguri')">Siliguri</span>
-        <span class="city-chip" onclick="selectCity(this,'Durgapur')">Durgapur</span>
-        <span class="city-chip" onclick="selectCity(this,'Asansol')">Asansol</span>
-        <span class="city-chip" onclick="selectCity(this,'Patna')">Patna</span>
-        <span class="city-chip" onclick="selectCity(this,'Ranchi')">Ranchi</span>
-        <span class="city-chip" onclick="selectCity(this,'Guwahati')">Guwahati</span>
-        <span class="city-chip" onclick="selectCity(this,'Hyderabad')">Hyderabad</span>
-        <span class="city-chip" onclick="selectCity(this,'Chennai')">Chennai</span>
-        <span class="city-chip" onclick="selectCity(this,'Pune')">Pune</span>
-        <span class="city-chip" onclick="selectCity(this,'Jaipur')">Jaipur</span>
-      </div>
-      <button class="btn-next" onclick="goToStep(2)">Next: Car Condition →</button>
     </div>
 
-    <!-- STEP 2 -->
-    <div class="step-content" id="step2">
-      <div class="flabel" style="margin-bottom:8px">Overall Car Condition</div>
-      <div class="cond-cards" id="condCards">
-        <div class="cond-card active" onclick="selectCond(this,'Excellent')"><div class="icon">✨</div><div class="ctitle">Excellent</div><div class="csub">Like new, no issues</div></div>
-        <div class="cond-card" onclick="selectCond(this,'Good')"><div class="icon">👍</div><div class="ctitle">Good</div><div class="csub">Minor wear, well maintained</div></div>
-        <div class="cond-card" onclick="selectCond(this,'Fair')"><div class="icon">🔧</div><div class="ctitle">Fair</div><div class="csub">Some damage, needs repair</div></div>
-        <div class="cond-card" onclick="selectCond(this,'Poor')"><div class="icon">😐</div><div class="ctitle">Poor</div><div class="csub">Major repairs needed</div></div>
-      </div>
-      <div class="flabel">Accident History</div>
-      <div class="acc-row">
-        <button class="tog-btn active" onclick="togSelect(this,'acc')">No Accident</button>
-        <button class="tog-btn" onclick="togSelect(this,'acc')">Minor Accident</button>
-        <button class="tog-btn" onclick="togSelect(this,'acc')">Major Accident</button>
-      </div>
-      <div class="flabel">Service History</div>
-      <div class="svc-row">
-        <button class="tog-btn active" onclick="togSelect(this,'svc')">Authorized Service</button>
-        <button class="tog-btn" onclick="togSelect(this,'svc')">Local Service</button>
-        <button class="tog-btn" onclick="togSelect(this,'svc')">No Records</button>
-      </div>
-      <div class="flabel">Insurance Status</div>
-      <div class="ins-row">
-        <button class="tog-btn active" onclick="togSelect(this,'ins')">Comprehensive Valid</button>
-        <button class="tog-btn" onclick="togSelect(this,'ins')">Third Party Only</button>
-        <button class="tog-btn" onclick="togSelect(this,'ins')">Expired</button>
-      </div>
-      <div class="flabel">Loan Status</div>
-      <div class="loan-row">
-        <button class="tog-btn active" onclick="togSelect(this,'loan')">No Loan / Clear</button>
-        <button class="tog-btn" onclick="togSelect(this,'loan')">Loan Active</button>
-      </div>
-      <div style="margin-top:8px">
-        <button class="btn-back" onclick="goToStep(1)">← Back</button>
-        <button class="btn-next" style="width:auto;padding:12px 28px" onclick="goToStep(3)">Next: Contact →</button>
-      </div>
-    </div>
-
-    <!-- STEP 3 -->
-    <div class="step-content" id="step3">
-      <div class="frow">
-        <div>
-          <div class="flabel">Your Name</div>
-          <input type="text" id="userName" placeholder="Full Name">
+    <!-- ISOLATED RESULT INTERFACE -->
+    <div class="result-box" id="resultBox">
+        <div class="res-badge">✓ Computational Graph Active</div>
+        <div class="res-car-name" id="resCarName">Assessment Result</div>
+        <div class="res-price">
+            <div style="font-size:12px; color:#666; margin-bottom:4px;">Estimated Valuation Matrix Spectrum</div>
+            <div class="res-price-val" id="resPriceVal">Calculating...</div>
         </div>
-        <div>
-          <div class="flabel">Mobile Number</div>
-          <input type="tel" id="userPhone" placeholder="10-digit mobile">
+        <button class="btn-pdf" onclick="showPaymentWindow()">Download Full Premium PDF Report Structure</button>
+
+        <!-- SECURED CHECKOUT ANCHOR -->
+        <div class="payment-section" id="paymentSection">
+            <h3>Download Comprehensive PDF Diagnostic Report</h3>
+            <p style="margin-bottom:12px;">Get exact calculation logs, algorithmic structural depr sheets, and local market trends.</p>
+            <button class="btn-pay" onclick="openRazorpay()">Pay Securely via Razorpay — ₹49</button>
         </div>
-      </div>
-      <div class="frow1">
-        <div class="flabel">Email (for PDF report)</div>
-        <input type="email" id="userEmail" placeholder="your@email.com">
-      </div>
-      <div class="frow">
-        <div>
-          <div class="flabel">Purpose</div>
-          <select>
-            <option>Sell My Car</option>
-            <option>Just Check Value</option>
-            <option>Insurance Renewal</option>
-            <option>Car Loan</option>
-            <option>RC Transfer</option>
-          </select>
-        </div>
-        <div>
-          <div class="flabel">Preferred Contact Time</div>
-          <select>
-            <option>Morning 9am–12pm</option>
-            <option>Afternoon 12–4pm</option>
-            <option>Evening 4–8pm</option>
-            <option>Anytime</option>
-          </select>
-        </div>
-      </div>
-      <div style="margin-top:8px">
-        <button class="btn-back" onclick="goToStep(2)">← Back</button>
-        <button class="btn-next" style="width:auto;padding:12px 28px" onclick="calculateValuation()">Get Free Valuation Report 🔍</button>
-      </div>
     </div>
-  </div>
-
-  <!-- RESULT BOX -->
-  <div class="result-box" id="resultBox" style="display:none">
-    <div class="res-badge">✓ AI Verified</div>
-    <div class="res-car-name" id="resCarName">Maruti Swift VXI</div>
-    <div class="res-sub" id="resCarSub">2021 · Petrol · Delhi NCR</div>
-    <div class="res-price">
-      <div class="res-price-label">Estimated Resale Value</div>
-      <div class="res-price-val" id="resPriceVal">₹5.2 – 5.8 Lakh</div>
-      <div class="res-price-basis">Based on real recent sales in your city</div>
-    </div>
-    <div class="res-stats">
-      <div class="res-stat"><div class="res-stat-val" id="resDepr">-22%</div><div class="res-stat-lbl">Depreciation</div></div>
-      <div class="res-stat"><div class="res-stat-val">High ↑</div><div class="res-stat-lbl">Market Demand</div></div>
-      <div class="res-stat"><div class="res-stat-val" id="resScore">8.2/10</div><div class="res-stat-lbl">Condition Score</div></div>
-    </div>
-    <div class="res-btns">
-      <button class="btn-sell">Sell Instantly — Best Price</button>
-      <button class="btn-pdf" onclick="document.getElementById('paymentSection').style.display='block';document.getElementById('paymentSection').scrollIntoView({behavior:'smooth'})">Download PDF Report</button>
-    </div>
-
-    <!-- FIX 3: RAZORPAY PAYMENT SECTION -->
-    <div class="payment-section" id="paymentSection">
-      <div style="font-size:13px;color:#92400e;margin-bottom:4px">🔒 Unlock Full Report</div>
-      <h3>Get Detailed PDF Valuation Report</h3>
-      <p>Depreciation chart, 12-month price trend, dealer comparison & best time to sell</p>
-      <div class="payment-features">
-        <span>✓ Full depreciation breakdown</span>
-        <span>✓ City-wise price comparison</span>
-        <span>✓ Best time to sell advice</span>
-        <span>✓ Dealer vs private price</span>
-      </div>
-      <button class="btn-pay" onclick="openRazorpay()">Get Full Report — ₹49 only</button>
-      <div class="payment-note">Secure payment via Razorpay · Instant PDF on email</div>
-    </div>
-  </div>
-</section>
-
-<section class="features">
-  <h2>Why CarValueAI?</h2>
-  <div class="feat-grid">
-    <div class="feat-card"><div class="feat-icon"><i class="ti ti-cpu"></i></div><div class="feat-title">AI-Powered Accuracy</div><div class="feat-desc">ML model trained on 10M+ real transactions — most accurate resale price in India</div></div>
-    <div class="feat-card"><div class="feat-icon"><i class="ti ti-bolt"></i></div><div class="feat-title">30-Second Valuation</div><div class="feat-desc">Instant result anytime, anywhere. No appointments, no waiting</div></div>
-    <div class="feat-card"><div class="feat-icon"><i class="ti ti-shield-check"></i></div><div class="feat-title">Zero Dealer Bias</div><div class="feat-desc">Pure data-driven price — never get underpaid by dealers again</div></div>
-    <div class="feat-card"><div class="feat-icon"><i class="ti ti-map-pin"></i></div><div class="feat-title">City-Specific Price</div><div class="feat-desc">Siliguri, Durgapur, Asansol — tier-3 cities have accurate local pricing too</div></div>
-  </div>
-</section>
-
-<section class="reviews">
-  <h2>Customer Reviews</h2>
-  <div class="rev-grid">
-    <div class="rev-card"><div class="rev-stars">★★★★★</div><div class="rev-text">"Got ₹1.2 lakh more than what the local dealer quoted. CarValueAI showed me the real market price!"</div><div class="rev-author">Rohit Sharma</div><div class="rev-loc">Delhi NCR · Maruti Swift 2020</div></div>
-    <div class="rev-card"><div class="rev-stars">★★★★★</div><div class="rev-text">"Sold my Hyundai Creta from Siliguri in 48 hours. AI valuation was exactly right!"</div><div class="rev-author">Priya Ghosh</div><div class="rev-loc">Siliguri · Hyundai Creta 2022</div></div>
-    <div class="rev-card"><div class="rev-stars">★★★★★</div><div class="rev-text">"Even my Tata Nexon EV in Durgapur was accurately valued. Best platform for tier-2 city sellers!"</div><div class="rev-author">Aakash Das</div><div class="rev-loc">Durgapur · Tata Nexon EV 2023</div></div>
-  </div>
 </section>
 
 <footer>
-  <div style="font-size:16px;font-weight:700;color:#FFD600;margin-bottom:8px">CarValueAI.in</div>
-  <div style="font-size:11px;opacity:0.7;margin-bottom:12px">India's most advanced AI-powered used car valuation platform</div>
-  <p>© 2025 CarValueAI.in · All rights reserved · Made with ❤️ in India</p>
+    <div>
+        <a href="#">Privacy Policy</a> | 
+        <a href="#">Terms of Service</a> | 
+        <a href="#">Refund Policy</a> | 
+        <a href="#">Contact Us</a>
+    </div>
+    <p>&copy; 2026 CarValueAI.in. All Rights Reserved. Algorithmic assets calculated via standard model datasets.</p>
 </footer>
 
-<a class="whatsapp-fab" href="https://wa.me/91XXXXXXXXXX" target="_blank">
-  <i class="ti ti-brand-whatsapp"></i>
+<!-- UPDATED LIVE WHATSAPP ROUTE WITH YOUR PHONE NUMBER -->
+<a href="https://wa.me/917908612028" class="whatsapp-fab" target="_blank">
+    <i class="ti ti-brand-whatsapp"></i>
 </a>
 
 <script>
-// ============================================================
-// FIX 1: CORRECT DEPRECIATION LOGIC (Indian Market)
-// ============================================================
-function getDepreciationFactor(registrationYear, ownerCount) {
-  ownerCount = ownerCount || 1;
-  var currentYear = new Date().getFullYear();
-  var age = currentYear - parseInt(registrationYear);
-  var dep;
-
-  if (age <= 0)      dep = 8;
-  else if (age === 1) dep = 20;   // FIX: was 9%, now correct 20%
-  else if (age === 2) dep = 25;   // FIX: 25%
-  else if (age === 3) dep = 30;   // FIX: 30%
-  else if (age === 4) dep = 35;   // FIX: 35%
-  else dep = 35 + (age - 4) * 6; // 5+ years: +6% per year
-
-  dep += (ownerCount - 1) * 3;   // +3% per extra owner
-  dep = Math.min(dep, 85);        // max 85% depreciation
-  return (100 - dep) / 100;
-}
-
-// ============================================================
-// FIX 2: DYNAMIC VARIANT DATABASE
-// ============================================================
-var carDatabase = {
-  "Maruti Suzuki": {
-    "Swift":        { variants: ["LXi","VXi","ZXi","ZXi+","ZXi AMT","ZXi+ AMT"],            basePrice: {"LXi":649000,"VXi":749000,"ZXi":849000,"ZXi+":949000,"ZXi AMT":899000,"ZXi+ AMT":999000} },
-    "Baleno":       { variants: ["Sigma","Delta","Zeta","Alpha","Delta AMT","Alpha AMT"],     basePrice: {"Sigma":669000,"Delta":749000,"Zeta":869000,"Alpha":999000,"Delta AMT":849000,"Alpha AMT":1099000} },
-    "Dzire":        { variants: ["LXi","VXi","ZXi","ZXi+","ZXi AMT","ZXi+ AMT"],            basePrice: {"LXi":679000,"VXi":769000,"ZXi":889000,"ZXi+":989000,"ZXi AMT":939000,"ZXi+ AMT":1039000} },
-    "Brezza":       { variants: ["LXi","VXi","ZXi","ZXi+","ZXi AT","ZXi+ AT"],              basePrice: {"LXi":799000,"VXi":1149000,"ZXi":1399000,"ZXi+":1549000,"ZXi AT":1499000,"ZXi+ AT":1649000} },
-    "Ertiga":       { variants: ["LXi","VXi","ZXi","ZXi+","ZXi+ AT"],                       basePrice: {"LXi":876000,"VXi":976000,"ZXi":1126000,"ZXi+":1276000,"ZXi+ AT":1426000} },
-    "WagonR":       { variants: ["LXi","VXi","ZXi","ZXi+","VXi AMT","ZXi AMT"],             basePrice: {"LXi":559000,"VXi":609000,"ZXi":669000,"ZXi+":719000,"VXi AMT":659000,"ZXi AMT":719000} },
-    "Alto K10":     { variants: ["STD","LXi","VXi","VXi+","VXi AGS","VXi+ AGS"],            basePrice: {"STD":399000,"LXi":449000,"VXi":529000,"VXi+":579000,"VXi AGS":579000,"VXi+ AGS":629000} },
-    "Grand Vitara": { variants: ["Sigma","Delta","Zeta","Alpha","Zeta AT","Alpha Hybrid"],   basePrice: {"Sigma":1069500,"Delta":1219500,"Zeta":1419500,"Alpha":1619500,"Zeta AT":1529500,"Alpha Hybrid":1779500} },
-    "Fronx":        { variants: ["Sigma","Delta","Delta+","Zeta","Alpha","Alpha AT"],         basePrice: {"Sigma":754000,"Delta":884000,"Delta+":974000,"Zeta":1064000,"Alpha":1174000,"Alpha AT":1274000} },
-    "Jimny":        { variants: ["Zeta","Alpha"],                                             basePrice: {"Zeta":1274000,"Alpha":1449000} }
-  },
-  "Hyundai": {
-    "Creta":   { variants: ["E","EX","S","S(O)","SX","SX(O)","SX Tech","SX AT","SX(O) AT"],  basePrice: {"E":1100000,"EX":1350000,"S":1450000,"S(O)":1550000,"SX":1750000,"SX(O)":1900000,"SX Tech":2000000,"SX AT":1850000,"SX(O) AT":2000000} },
-    "i20":     { variants: ["Magna","Sportz","Asta","Asta(O)","Sportz IVT","Asta IVT"],       basePrice: {"Magna":699000,"Sportz":849000,"Asta":1049000,"Asta(O)":1199000,"Sportz IVT":949000,"Asta IVT":1149000} },
-    "Venue":   { variants: ["E","S","S+","SX","SX+","SX(O)","SX AT","SX(O) AT"],             basePrice: {"E":799900,"S":1049900,"S+":1149900,"SX":1249900,"SX+":1349900,"SX(O)":1499900,"SX AT":1299900,"SX(O) AT":1549900} },
-    "Verna":   { variants: ["EX","S","S+","SX","SX Tech","SX(O)","SX AT","SX(O) AT"],        basePrice: {"EX":1099900,"S":1299900,"S+":1399900,"SX":1599900,"SX Tech":1749900,"SX(O)":1799900,"SX AT":1649900,"SX(O) AT":1849900} },
-    "Alcazar": { variants: ["Prestige","Prestige(O)","Platinum","Signature","Signature AT"],  basePrice: {"Prestige":1699000,"Prestige(O)":1799000,"Platinum":1999000,"Signature":2199000,"Signature AT":2349000} },
-    "Exter":   { variants: ["EX","S","S AMT","SX","SX(O)","SX AMT","SX(O) AMT"],             basePrice: {"EX":599900,"S":749900,"S AMT":849900,"SX":949900,"SX(O)":1049900,"SX AMT":1049900,"SX(O) AMT":1149900} },
-    "Tucson":  { variants: ["Platinum","Signature 2WD","Signature AWD"],                      basePrice: {"Platinum":2969000,"Signature 2WD":3499000,"Signature AWD":3699000} }
-  },
-  "Tata Motors": {
-    "Nexon":    { variants: ["Smart","Smart+","Pure","Pure S","Creative","Creative+","Fearless","Fearless+","Creative AMT","Fearless AMT"], basePrice: {"Smart":799000,"Smart+":899000,"Pure":999000,"Pure S":1099000,"Creative":1199000,"Creative+":1349000,"Fearless":1499000,"Fearless+":1649000,"Creative AMT":1299000,"Fearless AMT":1599000} },
-    "Nexon EV": { variants: ["Creative 40","Creative+ 40","Fearless 40","Fearless+ 40","Empowered 40","Fearless+ 45","Empowered 45"], basePrice: {"Creative 40":1499000,"Creative+ 40":1649000,"Fearless 40":1799000,"Fearless+ 40":1949000,"Empowered 40":2149000,"Fearless+ 45":2049000,"Empowered 45":2249000} },
-    "Harrier":  { variants: ["Smart","Smart+","Pure","Creative","Creative+","Fearless","Fearless+","Fearless+ AT"], basePrice: {"Smart":1499000,"Smart+":1649000,"Pure":1799000,"Creative":1999000,"Creative+":2149000,"Fearless":2349000,"Fearless+":2499000,"Fearless+ AT":2649000} },
-    "Safari":   { variants: ["Smart","Smart+","Pure","Creative","Creative+","Fearless","Fearless+","Accomplished AT"], basePrice: {"Smart":1599000,"Smart+":1749000,"Pure":1899000,"Creative":2199000,"Creative+":2349000,"Fearless":2549000,"Fearless+":2749000,"Accomplished AT":2849000} },
-    "Punch":    { variants: ["Pure","Adventure","Accomplished","Creative","Accomplished AMT","Creative AMT"], basePrice: {"Pure":599000,"Adventure":749000,"Accomplished":929000,"Creative":1049000,"Accomplished AMT":1029000,"Creative AMT":1149000} },
-    "Tiago":    { variants: ["XE","XM","XMA","XZ","XZA","XZ+","XZA+"], basePrice: {"XE":499000,"XM":599000,"XMA":649000,"XZ":749000,"XZA":799000,"XZ+":849000,"XZA+":899000} },
-    "Tigor":    { variants: ["XE","XM","XZ","XZA","XZ+","XZA+"], basePrice: {"XE":599000,"XM":699000,"XZ":799000,"XZA":849000,"XZ+":899000,"XZA+":949000} },
-    "Curvv":    { variants: ["Creative+","Accomplished","Accomplished+","Accomplished+ AT","Empowered"], basePrice: {"Creative+":999900,"Accomplished":1299900,"Accomplished+":1499900,"Accomplished+ AT":1649900,"Empowered":1799900} }
-  },
-  "Mahindra": {
-    "Thar":         { variants: ["MX 4STR MT","LX Petrol MT","LX Diesel MT","LX AT","LX 2STR Diesel"], basePrice: {"MX 4STR MT":1299000,"LX Petrol MT":1499000,"LX Diesel MT":1599000,"LX AT":1799000,"LX 2STR Diesel":1399000} },
-    "XUV700":       { variants: ["MX Petrol MT","AX3 Petrol MT","AX5 Petrol MT","AX5 Diesel MT","AX7 Petrol AT","AX7 Diesel AT","AX7 L AT"], basePrice: {"MX Petrol MT":1399000,"AX3 Petrol MT":1599000,"AX5 Petrol MT":1899000,"AX5 Diesel MT":2099000,"AX7 Petrol AT":2399000,"AX7 Diesel AT":2599000,"AX7 L AT":2799000} },
-    "Scorpio-N":    { variants: ["Z2 MT","Z4 MT","Z4 AT","Z6 MT","Z6 AT","Z8 MT","Z8 AT","Z8 L MT","Z8 L AT"], basePrice: {"Z2 MT":1349900,"Z4 MT":1599900,"Z4 AT":1749900,"Z6 MT":1849900,"Z6 AT":1999900,"Z8 MT":2249900,"Z8 AT":2399900,"Z8 L MT":2499900,"Z8 L AT":2649900} },
-    "Scorpio Classic": { variants: ["S","S11"], basePrice: {"S":1199000,"S11":1349000} },
-    "Bolero":       { variants: ["B2","B4","B6","B6 (O)","B8"], basePrice: {"B2":949000,"B4":1049000,"B6":1149000,"B6 (O)":1249000,"B8":1349000} },
-    "XUV3XO":       { variants: ["MX1","MX2","MX2 Pro","MX3","MX3 Pro","AX5L","AX7 AT"], basePrice: {"MX1":799000,"MX2":949000,"MX2 Pro":1049000,"MX3":1149000,"MX3 Pro":1299000,"AX5L":1449000,"AX7 AT":1599000} },
-    "BE 6":         { variants: ["Pack One","Pack Two","Pack Three"], basePrice: {"Pack One":1890000,"Pack Two":2099000,"Pack Three":2349000} },
-    "XEV 9e":       { variants: ["Pack One","Pack Two","Pack Three"], basePrice: {"Pack One":2149000,"Pack Two":2399000,"Pack Three":2649000} }
-  },
-  "Honda": {
-    "City":    { variants: ["SV","V","VX","ZX","V CVT","VX CVT","ZX CVT"], basePrice: {"SV":1149000,"V":1299000,"VX":1449000,"ZX":1599000,"V CVT":1399000,"VX CVT":1549000,"ZX CVT":1699000} },
-    "Amaze":   { variants: ["E","S","V","VX","S CVT","V CVT","VX CVT"], basePrice: {"E":799000,"S":899000,"V":1049000,"VX":1149000,"S CVT":999000,"V CVT":1149000,"VX CVT":1249000} },
-    "Elevate": { variants: ["S MT","V MT","VX MT","ZX MT","V CVT","VX CVT","ZX CVT"], basePrice: {"S MT":1099000,"V MT":1299000,"VX MT":1499000,"ZX MT":1699000,"V CVT":1449000,"VX CVT":1649000,"ZX CVT":1849000} }
-  },
-  "Toyota": {
-    "Innova Crysta":      { variants: ["GX MT","VX MT","ZX MT","GX AT","VX AT","ZX AT"], basePrice: {"GX MT":1999000,"VX MT":2349000,"ZX MT":2649000,"GX AT":2199000,"VX AT":2549000,"ZX AT":2849000} },
-    "Innova HyCross":     { variants: ["G MT","G CVT","VX CVT","ZX CVT","GX HEV","VX HEV","ZX HEV"], basePrice: {"G MT":1899000,"G CVT":2099000,"VX CVT":2499000,"ZX CVT":2799000,"GX HEV":2249000,"VX HEV":2749000,"ZX HEV":3249000} },
-    "Fortuner":           { variants: ["4x2 MT","4x2 AT","4x4 MT","4x4 AT","Legender 4x2","Legender 4x4"], basePrice: {"4x2 MT":3399000,"4x2 AT":3699000,"4x4 MT":3949000,"4x4 AT":4099000,"Legender 4x2":4699000,"Legender 4x4":4999000} },
-    "Urban Cruiser Hyryder": { variants: ["E MT","S MT","G MT","V MT","G AT","V AT","V HEV","G HEV"], basePrice: {"E MT":1099900,"S MT":1299900,"G MT":1499900,"V MT":1699900,"G AT":1649900,"V AT":1849900,"V HEV":1899900,"G HEV":1699900} },
-    "Glanza": { variants: ["S","G","V","S AMT","G AMT","V AMT"], basePrice: {"S":699000,"G":799000,"V":899000,"S AMT":799000,"G AMT":899000,"V AMT":999000} }
-  },
-  "Kia": {
-    "Seltos":  { variants: ["HTE","HTK","HTK+","HTX","HTX+","GTX+","HTX AT","GTX+ AT","X Line MT","X Line AT"], basePrice: {"HTE":1099000,"HTK":1299000,"HTK+":1449000,"HTX":1649000,"HTX+":1849000,"GTX+":2099000,"HTX AT":1799000,"GTX+ AT":2249000,"X Line MT":2149000,"X Line AT":2299000} },
-    "Sonet":   { variants: ["HTE","HTK","HTK+","HTX","HTX+","GTX+","HTX AT","GTX+ AT"], basePrice: {"HTE":799000,"HTK":949000,"HTK+":1099000,"HTX":1249000,"HTX+":1399000,"GTX+":1549000,"HTX AT":1349000,"GTX+ AT":1649000} },
-    "Carens":  { variants: ["Premium MT","Prestige MT","Prestige+ MT","Luxury MT","Luxury+ MT","Prestige AT","Luxury AT","Luxury+ AT"], basePrice: {"Premium MT":1049000,"Prestige MT":1249000,"Prestige+ MT":1449000,"Luxury MT":1649000,"Luxury+ MT":1799000,"Prestige AT":1349000,"Luxury AT":1749000,"Luxury+ AT":1899000} }
-  },
-  "Skoda": {
-    "Slavia":  { variants: ["Active MT","Ambition MT","Style MT","Ambition AT","Style AT"], basePrice: {"Active MT":1099000,"Ambition MT":1399000,"Style MT":1649000,"Ambition AT":1499000,"Style AT":1849000} },
-    "Kushaq":  { variants: ["Active MT","Ambition MT","Style MT","Ambition AT","Style AT"], basePrice: {"Active MT":1129000,"Ambition MT":1349000,"Style MT":1699000,"Ambition AT":1499000,"Style AT":1849000} }
-  },
-  "Volkswagen": {
-    "Virtus":  { variants: ["Comfortline MT","Highline MT","Topline MT","Highline AT","Topline AT","GT MT","GT AT"], basePrice: {"Comfortline MT":1149000,"Highline MT":1399000,"Topline MT":1649000,"Highline AT":1499000,"Topline AT":1849000,"GT MT":1699000,"GT AT":1999000} },
-    "Taigun":  { variants: ["Comfortline MT","Highline MT","Topline MT","Highline AT","Topline AT","GT Plus MT","GT Plus AT"], basePrice: {"Comfortline MT":1149000,"Highline MT":1399000,"Topline MT":1699000,"Highline AT":1499000,"Topline AT":1849000,"GT Plus MT":1749000,"GT Plus AT":2049000} }
-  },
-  "MG Motor": {
-    "Hector":     { variants: ["Style MT","Super MT","Smart Pro MT","Shine Pro MT","Sharp Pro MT","Savvy Pro AT"], basePrice: {"Style MT":1399000,"Super MT":1599000,"Smart Pro MT":1749000,"Shine Pro MT":1949000,"Sharp Pro MT":2349000,"Savvy Pro AT":2549000} },
-    "Windsor EV": { variants: ["Excite","Exclusive","Essence"], basePrice: {"Excite":1399000,"Exclusive":1549000,"Essence":1699000} },
-    "Comet EV":   { variants: ["Play","Fun","Feel","Charge"], basePrice: {"Play":699000,"Fun":799000,"Feel":849000,"Charge":949000} }
-  }
+const carDatabase = {
+    "Maruti Suzuki": {
+        "Swift": { variants: ["LXi", "VXi", "ZXi"], basePrice: { "LXi": 649000, "VXi": 749000, "ZXi": 849000 } },
+        "Baleno": { variants: ["Sigma", "Delta", "Zeta"], basePrice: { "Sigma": 669000, "Delta": 749000, "Zeta": 869000 } }
+    },
+    "Hyundai": {
+        "Creta": { variants: ["E", "EX", "S"], basePrice: { "E": 1100000, "EX": 1350000, "S": 1450000 } }
+    },
+    "Tata Motors": {
+        "Nexon": { variants: ["Smart", "Pure", "Creative"], basePrice: { "Smart": 799000, "Pure": 999000, "Creative": 1199000 } }
+    },
+    "Mahindra": {
+        "Thar": { variants: ["MX MT", "LX Petrol MT", "LX Diesel MT"], basePrice: { "MX MT": 1299000, "LX Petrol MT": 1499000, "LX Diesel MT": 1599000 } }
+    }
 };
 
-// State variables
-var selectedFuel = 'Petrol';
-var selectedOwner = 1;
-var selectedCity = 'Delhi NCR';
-var selectedCond = 'Excellent';
-var selectedKm = 40000;
+let appState = {
+    brand: "", model: "", variant: "", year: "",
+    fuel: "Petrol", owner: 1, km: 35000, city: "Delhi NCR", condition: "Excellent"
+};
 
-// Brand change -> populate models
 function onBrandChange() {
-  var brand = document.getElementById('brandSelect').value;
-  var modelSel = document.getElementById('modelSelect');
-  var variantSel = document.getElementById('variantSelect');
-  modelSel.innerHTML = '<option value="">Select Model</option>';
-  variantSel.innerHTML = '<option value="">Select Variant</option>';
-  if (carDatabase[brand]) {
-    Object.keys(carDatabase[brand]).forEach(function(m) {
-      var o = document.createElement('option'); o.value = m; o.textContent = m;
-      modelSel.appendChild(o);
-    });
-  }
+    const brandSel = document.getElementById("brandSelect");
+    const modelSel = document.getElementById("modelSelect");
+    const variantSel = document.getElementById("variantSelect");
+    
+    appState.brand = brandSel.value;
+    modelSel.innerHTML = '<option value="">-- Choose Model --</option>';
+    variantSel.innerHTML = '<option value="">-- Choose Variant --</option>';
+    variantSel.disabled = true;
+    
+    if (appState.brand && carDatabase[appState.brand]) {
+        modelSel.disabled = false;
+        for (let m in carDatabase[appState.brand]) {
+            let opt = document.createElement("option");
+            opt.value = m; opt.textContent = m;
+            modelSel.appendChild(opt);
+        }
+    } else {
+        modelSel.disabled = true;
+    }
 }
 
-// Model change -> populate variants
 function onModelChange() {
-  var brand = document.getElementById('brandSelect').value;
-  var model = document.getElementById('modelSelect').value;
-  var variantSel = document.getElementById('variantSelect');
-  variantSel.innerHTML = '<option value="">Select Variant</option>';
-  if (carDatabase[brand] && carDatabase[brand][model]) {
-    carDatabase[brand][model].variants.forEach(function(v) {
-      var o = document.createElement('option'); o.value = v; o.textContent = v;
-      variantSel.appendChild(o);
-    });
-  }
+    const modelSel = document.getElementById("modelSelect");
+    const variantSel = document.getElementById("variantSelect");
+    appState.model = modelSel.value;
+    variantSel.innerHTML = '<option value="">-- Choose Variant --</option>';
+    
+    if (appState.brand && appState.model && carDatabase[appState.brand][appState.model]) {
+        variantSel.disabled = false;
+        carDatabase[appState.brand][appState.model].variants.forEach(v => {
+            let opt = document.createElement("option");
+            opt.value = v; opt.textContent = v;
+            variantSel.appendChild(opt);
+        });
+    } else {
+        variantSel.disabled = true;
+    }
 }
 
 function selectFuel(btn, val) {
-  selectedFuel = val;
-  document.querySelectorAll('.fuel-btn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
+    document.querySelectorAll(".fuel-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active"); appState.fuel = val;
 }
 
 function selectOwner(btn, val) {
-  selectedOwner = val;
-  document.querySelectorAll('.owner-btn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
+    document.querySelectorAll(".owner-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active"); appState.owner = val;
 }
 
-function selectCity(el, val) {
-  selectedCity = val;
-  document.querySelectorAll('.city-chip').forEach(function(c){ c.classList.remove('active'); });
-  el.classList.add('active');
+function selectCity(chip, val) {
+    document.querySelectorAll(".city-chip").forEach(c => c.classList.remove("active"));
+    chip.classList.add("active"); appState.city = val;
 }
 
-function selectCond(el, val) {
-  selectedCond = val;
-  document.querySelectorAll('.cond-card').forEach(function(c){ c.classList.remove('active'); });
-  el.classList.add('active');
-}
-
-function togSelect(btn, group) {
-  btn.closest('div').querySelectorAll('.tog-btn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
+function selectCond(card, val) {
+    document.querySelectorAll(".cond-card").forEach(c => c.classList.remove("active"));
+    card.classList.add("active"); appState.condition = val;
 }
 
 function updateKm(val) {
-  selectedKm = parseInt(val);
-  document.getElementById('kmVal').textContent = parseInt(val).toLocaleString('en-IN') + ' km';
+    appState.km = parseInt(val);
+    document.getElementById("kmVal").textContent = appState.km.toLocaleString('en-IN') + " km";
 }
 
-function goToStep(n) {
-  document.querySelectorAll('.step-content').forEach(function(s,i){
-    s.classList.toggle('active', i === n-1);
-  });
-  document.querySelectorAll('.step-tab').forEach(function(t,i){
-    t.classList.remove('active','done');
-    if (i === n-1) t.classList.add('active');
-    else if (i < n-1) t.classList.add('done');
-  });
+function goToStep(num) {
+    document.querySelectorAll(".step-content").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".step-tab").forEach(el => el.classList.remove("active"));
+    document.getElementById("step" + num).classList.add("active");
+    document.getElementById("tab" + num).classList.add("active");
 }
 
 function calculateValuation() {
-  var brand   = document.getElementById('brandSelect').value;
-  var model   = document.getElementById('modelSelect').value;
-  var variant = document.getElementById('variantSelect').value;
-  var year    = document.getElementById('yearSelect').value;
-
-  if (!brand || !model || !year) {
-    alert('Please select Brand, Model and Year to get valuation.');
-    goToStep(1); return;
-  }
-
-  // Get base price from database or use fallback
-  var basePrice = 800000;
-  if (carDatabase[brand] && carDatabase[brand][model]) {
-    var variantPrice = carDatabase[brand][model].basePrice[variant];
-    if (variantPrice) basePrice = variantPrice;
-    else {
-      // Average of all variants
-      var prices = Object.values(carDatabase[brand][model].basePrice);
-      basePrice = prices.reduce(function(a,b){return a+b},0) / prices.length;
+    appState.variant = document.getElementById("variantSelect").value;
+    appState.year = document.getElementById("yearSelect").value;
+    const uName = document.getElementById("userName").value.trim();
+    const uPhone = document.getElementById("userPhone").value.trim();
+    
+    if (!appState.variant || !appState.year || !uName || !uPhone) { 
+        alert("Verification logic parameters are missing. Complete all entry forms."); 
+        return; 
     }
-  }
-
-  // FIX 1: Apply correct depreciation
-  var factor = getDepreciationFactor(year, selectedOwner);
-
-  // Condition adjustment
-  var condFactor = selectedCond === 'Excellent' ? 1.05 : selectedCond === 'Good' ? 1.0 : selectedCond === 'Fair' ? 0.90 : 0.80;
-
-  // KM adjustment
-  var kmFactor = selectedKm < 20000 ? 1.05 : selectedKm < 60000 ? 1.0 : selectedKm < 100000 ? 0.95 : selectedKm < 150000 ? 0.88 : 0.80;
-
-  var estimated = basePrice * factor * condFactor * kmFactor;
-  var minVal = Math.round(estimated * 0.93 / 1000) * 1000;
-  var maxVal = Math.round(estimated * 1.07 / 1000) * 1000;
-  var deprPct = Math.round((1 - factor) * 100);
-
-  // Condition score
-  var scoreBase = selectedCond === 'Excellent' ? 9.0 : selectedCond === 'Good' ? 7.5 : selectedCond === 'Fair' ? 5.5 : 3.5;
-  var score = (scoreBase - (selectedKm/300000)*2).toFixed(1);
-
-  // Display results
-  document.getElementById('resCarName').textContent = brand + ' ' + model + (variant ? ' ' + variant : '');
-  document.getElementById('resCarSub').textContent = year + ' · ' + selectedFuel + ' · ' + selectedCity;
-  document.getElementById('resPriceVal').textContent = '₹' + (minVal/100000).toFixed(1) + ' – ' + (maxVal/100000).toFixed(1) + ' Lakh';
-  document.getElementById('resDepr').textContent = '-' + deprPct + '%';
-  document.getElementById('resScore').textContent = score + '/10';
-
-  document.getElementById('resultBox').style.display = 'block';
-  document.getElementById('paymentSection').style.display = 'none';
-  document.getElementById('resultBox').scrollIntoView({behavior:'smooth'});
+    
+    let base = carDatabase[appState.brand][appState.model].basePrice[appState.variant];
+    let computationalAge = 2026 - parseInt(appState.year);
+    let depreciationMultiplier = 15 + (computationalAge * 8);
+    if(depreciationMultiplier > 75) depreciationMultiplier = 75;
+    
+    let midValuation = base * ((100 - depreciationMultiplier) / 100);
+    
+    document.getElementById("resCarName").textContent = `${appState.brand} ${appState.model} [${appState.variant}]`;
+    document.getElementById("resPriceVal").textContent = "₹" + Math.round(midValuation * 0.93).toLocaleString('en-IN') + " - ₹" + Math.round(midValuation * 1.04).toLocaleString('en-IN');
+    
+    const resultBox = document.getElementById("resultBox");
+    resultBox.style.display = "block";
+    resultBox.scrollIntoView({ behavior: 'smooth' });
 }
 
-// ============================================================
-// FIX 3: RAZORPAY PAYMENT
-// IMPORTANT: Replace YOUR_RAZORPAY_KEY_ID with your actual key
-// Get it from: https://dashboard.razorpay.com/app/keys
-// ============================================================
+function showPaymentWindow() {
+    document.getElementById("paymentSection").style.display = "block";
+}
+
 function openRazorpay() {
-  var options = {
-    key: 'YOUR_RAZORPAY_KEY_ID',
-    amount: 4900,
-    currency: 'INR',
-    name: 'CarValueAI',
-    description: 'Full Car Valuation PDF Report',
-    image: 'https://carvalueai.in/logo.png',
-    handler: function(response) {
-      document.getElementById('paymentSection').innerHTML =
-        '<div style="padding:20px;text-align:center;color:#15803d">' +
-        '<div style="font-size:40px;margin-bottom:8px">✅</div>' +
-        '<h3 style="margin:0 0 8px;color:#15803d">Payment Successful!</h3>' +
-        '<p style="font-size:13px;color:#555">Your full report will be sent to your email within 2 minutes.<br>' +
-        'Payment ID: ' + response.razorpay_payment_id + '</p></div>';
-    },
-    prefill: {
-      name: document.getElementById('userName') ? document.getElementById('userName').value : '',
-      email: document.getElementById('userEmail') ? document.getElementById('userEmail').value : '',
-      contact: document.getElementById('userPhone') ? document.getElementById('userPhone').value : ''
-    },
-    theme: { color: '#C62828' }
-  };
-  var rzp = new Razorpay(options);
-  rzp.on('payment.failed', function(r) {
-    alert('Payment failed: ' + r.error.description + '. Please try again.');
-  });
-  rzp.open();
+    // YOUR ORIGINAL GENERATED API KEY PLUGGED IN SUCCESSFULLY
+    var options = {
+        "key": "rzp_test_SwQPmJTbKEDWoZ", 
+        "amount": 4900, 
+        "currency": "INR",
+        "name": "CarValueAI.in",
+        "description": "Premium Engine Valuation PDF Access",
+        "handler": function (response) {
+            alert("Security Handshake Complete. Internal Token ID: " + response.razorpay_payment_id);
+        },
+        "theme": { "color": "#C62828" }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
 }
-</script>
-</body>
-</html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CarValueAI.in — India's #1 AI Car Valuation Platform</title>
-<meta name="description" content="Get instant AI-powered car valuation for any car in India. Free resale price for 35+ brands, 1000+ models, 150+ cities including Siliguri, Durgapur, Kolkata and more.">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#fff;color:#212121}
-.sr-only{position:absolute;left:-9999px}
-.navbar{background:#C62828;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:999}
-.logo{color:white;font-size:20px;font-weight:700;letter-spacing:-0.5px;cursor:pointer;text-decoration:none}
-.logo span{color:#FFD600}
-.nav-links{display:flex;gap:18px}
-.nav-links a{color:rgba(255,255,255,0.85);font-size:12px;cursor:pointer;text-decoration:none}
-.nav-links a:hover{color:white}
-.nav-cta{background:white;color:#C62828;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;border:none;white-space:nowrap}
-.trust-bar{background:#C62828;border-top:1px solid rgba(255,255,255,0.15);padding:8px 20px;display:flex;justify-content:center;align-items:center;gap:28px;flex-wrap:wrap}
-.trust-item{color:rgba(255,255,255,0.9);font-size:11px;font-weight:600;display:flex;align-items:center;gap:5px}
-.trust-item i{font-size:15px;color:#FFD600}
-.hero{background:#B71C1C;padding:36px 20px 52px;text-align:center;color:white}
-.hero-badge{display:inline-block;background:rgba(255,214,0,0.2);border:1px solid rgba(255,214,0,0.5);color:#FFD600;font-size:11px;padding:3px 14px;border-radius:20px;font-weight:700;letter-spacing:0.5px;margin-bottom:14px}
-.hero h1{font-size:30px;font-weight:700;margin-bottom:8px;line-height:1.3}
-.hero p{font-size:14px;opacity:0.88;margin-bottom:24px}
-.stats-row{display:flex;justify-content:center;gap:32px;margin-bottom:28px}
-.stat-num{font-size:20px;font-weight:700;color:#FFD600}
-.stat-lbl{font-size:10px;opacity:0.8;margin-top:1px}
-.search-box{background:white;border-radius:14px;padding:22px;max-width:700px;margin:0 auto;box-shadow:0 8px 40px rgba(0,0,0,0.25)}
-.stitle{font-size:13px;font-weight:700;color:#212121;margin-bottom:14px;text-align:left}
-.step-tabs{display:flex;gap:0;margin-bottom:16px;border:1px solid #E0E0E0;border-radius:8px;overflow:hidden}
-.step-tab{flex:1;padding:9px;text-align:center;font-size:11px;font-weight:700;cursor:pointer;border:none;background:#F5F5F5;color:#9E9E9E;transition:all 0.2s}
-.step-tab.active{background:#C62828;color:white}
-.step-tab.done{background:#E8F5E9;color:#2E7D32}
-.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
-.frow2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.frow1{margin-bottom:10px}
-select,input[type=text],input[type=tel],input[type=email]{width:100%;padding:9px 10px;border:1px solid #E0E0E0;border-radius:7px;font-size:12px;color:#212121;background:white;cursor:pointer;-webkit-appearance:none;appearance:none}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:24px}
-select:focus,input:focus{outline:none;border-color:#C62828}
-.flabel{font-size:12px;font-weight:700;color:#212121;margin-bottom:7px}
-.fuel-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px}
-.fuel-btn{padding:8px 4px;border:1px solid #E0E0E0;border-radius:7px;text-align:center;cursor:pointer;font-size:10px;font-weight:600;background:white;color:#616161;transition:all 0.2s}
-.fuel-btn:hover{border-color:#C62828;color:#C62828}
-.fuel-btn.sel{border-color:#C62828;background:#FFEBEE;color:#C62828}
-.fuel-btn i{display:block;font-size:19px;margin-bottom:3px}
-.cond-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-.cond-btn{padding:11px 6px;border:1px solid #E0E0E0;border-radius:8px;cursor:pointer;text-align:center;font-size:11px;font-weight:700;background:white;transition:all 0.2s}
-.cond-btn:hover{border-color:#C62828}
-.cond-btn.sel{border-color:#C62828;background:#FFEBEE;color:#C62828}
-.cond-sub{font-size:10px;color:#9E9E9E;margin-top:3px;font-weight:400}
-.cond-btn.sel .cond-sub{color:#B71C1C}
-.city-wrap{position:relative}
-.city-results{position:absolute;top:100%;left:0;right:0;background:white;border:1px solid #E0E0E0;border-top:none;border-radius:0 0 8px 8px;max-height:180px;overflow-y:auto;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-.city-ri{padding:8px 12px;font-size:12px;cursor:pointer;border-bottom:1px solid #F5F5F5;color:#212121}
-.city-ri:hover{background:#FFEBEE;color:#C62828}
-.qcities{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-.qcity{padding:4px 10px;border-radius:14px;font-size:11px;background:#F5F5F5;color:#616161;cursor:pointer;border:1px solid transparent;transition:all 0.2s;font-weight:500}
-.qcity:hover,.qcity.sel{border-color:#C62828;color:#C62828;background:#FFEBEE}
-.val-btn{width:100%;background:#C62828;color:white;border:none;padding:13px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;transition:background 0.2s}
-.val-btn:hover{background:#B71C1C}
-.result-card{background:white;border-radius:12px;padding:22px;border:2px solid #C62828;max-width:700px;margin:16px auto 0;display:none}
-.res-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #E0E0E0}
-.res-car{font-size:16px;font-weight:700;color:#212121}
-.res-year{font-size:11px;color:#757575;margin-top:2px}
-.verified-badge{background:#E8F5E9;color:#2E7D32;padding:5px 12px;border-radius:16px;font-size:11px;font-weight:700;white-space:nowrap}
-.price-lbl{font-size:11px;color:#757575;text-align:center;margin-top:4px}
-.price-main{font-size:34px;font-weight:700;color:#C62828;text-align:center}
-.price-sub{font-size:11px;color:#9E9E9E;text-align:center;margin-top:4px}
-.factors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-.factor{background:#F5F5F5;border-radius:7px;padding:10px}
-.fn{font-size:10px;color:#757575;margin-bottom:3px}
-.fv{font-size:12px;font-weight:700;color:#212121}
-.fbar{height:3px;background:#E0E0E0;border-radius:2px;margin-top:6px;overflow:hidden}
-.ffill{height:100%;background:#C62828;border-radius:2px;transition:width 1s}
-.sell-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
-.btn-p{padding:11px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;border:none;background:#C62828;color:white;text-align:center;transition:background 0.2s}
-.btn-p:hover{background:#B71C1C}
-.btn-s{padding:11px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid #C62828;background:white;color:#C62828;text-align:center;transition:all 0.2s}
-.btn-s:hover{background:#FFEBEE}
-.section{padding:36px 20px;max-width:1100px;margin:0 auto}
-.sec-title{font-size:18px;font-weight:700;color:#212121;margin-bottom:4px}
-.sec-sub{font-size:12px;color:#757575;margin-bottom:18px}
-.tab-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.tab-pill{padding:6px 14px;border-radius:18px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #E0E0E0;background:white;color:#757575;transition:all 0.2s}
-.tab-pill:hover{border-color:#C62828;color:#C62828}
-.tab-pill.active{background:#C62828;color:white;border-color:#C62828}
-.brands-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px}
-.brand-card{background:white;border:1px solid #E0E0E0;border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;transition:all 0.2s}
-.brand-card:hover{border-color:#C62828;transform:translateY(-2px);box-shadow:0 4px 12px rgba(198,40,40,0.12)}
-.brand-card.active{border-color:#C62828;background:#FFEBEE}
-.brand-abbr{width:44px;height:28px;background:#F5F5F5;border-radius:5px;display:flex;align-items:center;justify-content:center;margin:0 auto 7px;font-size:9px;font-weight:700;color:#757575}
-.brand-name{font-size:10px;font-weight:700;color:#212121}
-.brand-count{font-size:9px;color:#9E9E9E;margin-top:1px}
-.models-sec{background:#F5F5F5;padding:16px 18px;border-radius:10px;margin-top:14px;display:none}
-.models-title{font-size:13px;font-weight:700;margin-bottom:12px;color:#212121}
-.models-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
-.mpill{padding:7px 12px;background:white;border:1px solid #E0E0E0;border-radius:18px;font-size:11px;font-weight:600;cursor:pointer;transition:all 0.2s;text-align:center}
-.mpill:hover{border-color:#C62828;color:#C62828}
-.mpill.sel{background:#C62828;color:white;border-color:#C62828}
-.how-sec{background:#F5F5F5;padding:36px 20px}
-.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:860px;margin:20px auto 0;position:relative}
-.step-item{text-align:center;position:relative;padding:0 10px}
-.step-item:not(:last-child)::after{content:'';position:absolute;top:22px;right:-12px;width:24px;height:2px;background:#C62828}
-.step-circle{width:44px;height:44px;background:#C62828;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;margin:0 auto 10px;font-weight:700}
-.step-name{font-size:12px;font-weight:700;margin-bottom:3px;color:#212121}
-.step-desc{font-size:10px;color:#757575;line-height:1.5}
-.pop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
-.pop-card{border:1px solid #E0E0E0;border-radius:10px;overflow:hidden;cursor:pointer;transition:all 0.2s}
-.pop-card:hover{border-color:#C62828;transform:translateY(-2px);box-shadow:0 4px 14px rgba(198,40,40,0.1)}
-.pop-img{background:#FFF8E1;height:80px;display:flex;align-items:center;justify-content:center;font-size:32px}
-.pop-body{padding:10px}
-.pop-name{font-size:12px;font-weight:700;color:#212121}
-.pop-brand{font-size:10px;color:#9E9E9E}
-.pop-price{font-size:11px;color:#C62828;font-weight:700;margin-top:3px}
-.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.feat{background:white;border:1px solid #E0E0E0;border-radius:10px;padding:14px;display:flex;gap:12px;align-items:flex-start}
-.feat-icon{width:36px;height:36px;border-radius:7px;background:#FFEBEE;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#C62828;font-size:18px}
-.feat-title{font-size:12px;font-weight:700;margin-bottom:3px;color:#212121}
-.feat-desc{font-size:11px;color:#757575;line-height:1.5}
-.city-section{background:#F5F5F5;padding:36px 20px}
-.state-group{margin-bottom:18px}
-.state-name{font-size:10px;font-weight:700;color:#9E9E9E;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:7px}
-.city-chips-row{display:flex;flex-wrap:wrap;gap:5px}
-.city-chip{padding:5px 12px;border-radius:14px;font-size:11px;background:white;color:#616161;cursor:pointer;border:1px solid #E0E0E0;transition:all 0.2s;font-weight:500}
-.city-chip:hover{border-color:#C62828;color:#C62828;background:#FFEBEE}
-.testimonials{background:#1A1A2E;padding:40px 20px;color:white}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1000px;margin:18px auto 0}
-.testi-card{background:rgba(255,255,255,0.07);border-radius:10px;padding:18px}
-.testi-stars{color:#FFD600;font-size:14px;margin-bottom:8px}
-.testi-text{font-size:12px;opacity:0.85;line-height:1.6;margin-bottom:12px}
-.testi-name{font-size:12px;font-weight:700}
-.testi-city{font-size:10px;opacity:0.55}
-.footer{background:#111;color:rgba(255,255,255,0.55);padding:32px 20px}
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;max-width:1100px;margin:0 auto 22px}
-.footer-brand{color:white;font-size:17px;font-weight:700;margin-bottom:6px}
-.footer-brand span{color:#FFD600}
-.footer-desc{font-size:11px;line-height:1.6;color:rgba(255,255,255,0.45)}
-.footer-col h4{color:rgba(255,255,255,0.85);font-size:12px;margin-bottom:10px;font-weight:700}
-.footer-col a{display:block;color:rgba(255,255,255,0.45);margin-bottom:6px;cursor:pointer;text-decoration:none;font-size:11px}
-.footer-col a:hover{color:white}
-.footer-fchips{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
-.footer-chip{padding:4px 10px;border-radius:12px;font-size:10px;background:#1a1a2e;color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.1)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;text-align:center;max-width:1100px;margin:0 auto;font-size:10px;color:rgba(255,255,255,0.35)}
-@media(max-width:700px){
-  .nav-links{display:none}
-  .frow3{grid-template-columns:1fr 1fr}
-  .feats{grid-template-columns:1fr}
-  .testi-grid{grid-template-columns:1fr}
-  .steps-row{grid-template-columns:1fr 1fr}
-  .footer-top{grid-template-columns:1fr 1fr}
-  .stats-row{gap:16px}
-  .hero h1{font-size:22px}
-}
-</style>
-</head>
-<body>
-
-<nav class="navbar">
-  <a class="logo" href="#">CarValue<span>AI</span>.in</a>
-  <div class="nav-links">
-    <a href="#">Sell Car</a>
-    <a href="#">Buy Used Car</a>
-    <a href="#">Car Loans</a>
-    <a href="#">Insurance</a>
-    <a href="#">RC Transfer</a>
-    <a href="#">Blog</a>
-  </div>
-  <button class="nav-cta">List Free</button>
-</nav>
-
-<div class="trust-bar">
-  <div class="trust-item"><i class="ti ti-shield-check"></i> 100% Free Valuation</div>
-  <div class="trust-item"><i class="ti ti-bolt"></i> 30-Second Result</div>
-  <div class="trust-item"><i class="ti ti-map-pin"></i> 150+ Cities Covered</div>
-  <div class="trust-item"><i class="ti ti-car"></i> 35+ Brands · 1000+ Models</div>
-  <div class="trust-item"><i class="ti ti-star"></i> 4.8/5 Rating</div>
-</div>
-
-<section class="hero">
-  <div class="hero-badge">⚡ India's #1 AI Car Valuation — Trusted by 50 Lakh+ Users</div>
-  <h1>Know Your Car's True Market Value<br>Before You Sell — Instantly Free</h1>
-  <p>From Siliguri to Mumbai — accurate resale price for every car, every city in India</p>
-  <div class="stats-row">
-    <div><div class="stat-num">50L+</div><div class="stat-lbl">Valuations</div></div>
-    <div><div class="stat-num">35+</div><div class="stat-lbl">Car Brands</div></div>
-    <div><div class="stat-num">1000+</div><div class="stat-lbl">Models</div></div>
-    <div><div class="stat-num">150+</div><div class="stat-lbl">Cities</div></div>
-  </div>
-
-  <div class="search-box">
-    <div class="stitle">🚗 Get Free Car Valuation Now — Instant & Accurate</div>
-    <div class="step-tabs">
-      <div class="step-tab active" id="tab1">1. Car Details</div>
-      <div class="step-tab" id="tab2">2. Condition</div>
-      <div class="step-tab" id="tab3">3. Contact</div>
-    </div>
-
-    <div id="step1">
-      <div class="frow3">
-        <select id="bs" onchange="loadModels(this.value)">
-          <option value="">Select Brand</option>
-          <option>Maruti Suzuki</option><option>Hyundai</option><option>Tata Motors</option>
-          <option>Mahindra</option><option>Honda</option><option>Toyota</option>
-          <option>Kia</option><option>Skoda</option><option>Volkswagen</option>
-          <option>Renault</option><option>MG Motor</option><option>Nissan</option>
-          <option>Ford</option><option>Jeep</option><option>Citroen</option>
-          <option>Datsun</option><option>Fiat</option><option>BMW</option>
-          <option>Mercedes-Benz</option><option>Audi</option><option>Volvo</option>
-          <option>Jaguar</option><option>Land Rover</option><option>Porsche</option>
-          <option>Lexus</option><option>BYD</option><option>Ola Electric</option>
-        </select>
-        <select id="ms"><option value="">Select Model</option></select>
-        <select id="vs"><option value="">Select Variant</option></select>
-      </div>
-      <div class="frow2">
-        <select id="yr">
-          <option value="">Year of Registration</option>
-          <option>2025</option><option>2024</option><option>2023</option><option>2022</option>
-          <option>2021</option><option>2020</option><option>2019</option><option>2018</option>
-          <option>2017</option><option>2016</option><option>2015</option><option>2014</option>
-          <option>2013</option><option>2012</option><option>2011</option><option>2010</option>
-          <option>2009</option><option>2008</option><option>2007</option>
-        </select>
-        <input type="text" id="km" placeholder="KMs Driven (e.g. 45000)" />
-      </div>
-      <div class="flabel">Fuel Type</div>
-      <div class="fuel-grid">
-        <div class="fuel-btn sel" onclick="selFuel(this,'Petrol')"><i class="ti ti-gas-station"></i>Petrol</div>
-        <div class="fuel-btn" onclick="selFuel(this,'Diesel')"><i class="ti ti-droplet"></i>Diesel</div>
-        <div class="fuel-btn" onclick="selFuel(this,'CNG')"><i class="ti ti-wind"></i>CNG</div>
-        <div class="fuel-btn" onclick="selFuel(this,'Electric')"><i class="ti ti-bolt"></i>Electric</div>
-        <div class="fuel-btn" onclick="selFuel(this,'Hybrid')"><i class="ti ti-leaf"></i>Hybrid</div>
-      </div>
-      <div class="frow2">
-        <select id="ow">
-          <option value="">No. of Owners</option>
-          <option>1st Owner</option><option>2nd Owner</option><option>3rd Owner</option><option>4th+ Owner</option>
-        </select>
-        <div class="city-wrap">
-          <input type="text" id="city-inp" placeholder="Search your city..." oninput="searchCity(this.value)" autocomplete="off" />
-          <div class="city-results" id="city-results"></div>
-        </div>
-      </div>
-      <div class="flabel" style="margin-bottom:7px">Quick Select City</div>
-      <div class="qcities" id="quick-cities">
-        <span class="qcity" onclick="setCity('Delhi NCR')">Delhi NCR</span>
-        <span class="qcity" onclick="setCity('Mumbai')">Mumbai</span>
-        <span class="qcity" onclick="setCity('Bangalore')">Bangalore</span>
-        <span class="qcity" onclick="setCity('Kolkata')">Kolkata</span>
-        <span class="qcity" onclick="setCity('Siliguri')">Siliguri</span>
-        <span class="qcity" onclick="setCity('Durgapur')">Durgapur</span>
-        <span class="qcity" onclick="setCity('Asansol')">Asansol</span>
-        <span class="qcity" onclick="setCity('Patna')">Patna</span>
-        <span class="qcity" onclick="setCity('Ranchi')">Ranchi</span>
-        <span class="qcity" onclick="setCity('Guwahati')">Guwahati</span>
-        <span class="qcity" onclick="setCity('Hyderabad')">Hyderabad</span>
-        <span class="qcity" onclick="setCity('Chennai')">Chennai</span>
-        <span class="qcity" onclick="setCity('Pune')">Pune</span>
-        <span class="qcity" onclick="setCity('Jaipur')">Jaipur</span>
-      </div>
-      <button class="val-btn" onclick="goStep2()">Next: Car Condition <i class="ti ti-arrow-right"></i></button>
-    </div>
-
-    <div id="step2" style="display:none">
-      <div class="flabel" style="margin-bottom:9px">Overall Car Condition</div>
-      <div class="cond-grid">
-        <div class="cond-btn" onclick="selCond(this,'Excellent')">
-          <div style="font-size:22px;margin-bottom:5px">✨</div>
-          <div>Excellent</div><div class="cond-sub">Like new, no issues</div>
-        </div>
-        <div class="cond-btn sel" onclick="selCond(this,'Good')">
-          <div style="font-size:22px;margin-bottom:5px">👍</div>
-          <div>Good</div><div class="cond-sub">Minor wear, well maintained</div>
-        </div>
-        <div class="cond-btn" onclick="selCond(this,'Fair')">
-          <div style="font-size:22px;margin-bottom:5px">🔧</div>
-          <div>Fair</div><div class="cond-sub">Some damage, needs repair</div>
-        </div>
-      </div>
-      <div class="frow2">
-        <select><option>Accident History</option><option>No Accident</option><option>Minor Accident</option><option>Major Accident</option></select>
-        <select><option>Service History</option><option>Authorized Service</option><option>Local Service</option><option>No Records</option></select>
-      </div>
-      <div class="frow2">
-        <select><option>Insurance Status</option><option>Comprehensive Valid</option><option>Third Party Only</option><option>Expired</option></select>
-        <select><option>Loan Status</option><option>No Loan / Clear</option><option>Loan Active</option></select>
-      </div>
-      <div class="frow2">
-        <select><option>Car Color</option><option>White</option><option>Silver</option><option>Black</option><option>Grey</option><option>Red</option><option>Blue</option><option>Brown</option><option>Gold</option><option>Other</option></select>
-        <select><option>Transmission</option><option>Manual</option><option>Automatic AMT</option><option>Automatic CVT</option><option>Automatic DCT</option></select>
-      </div>
-      <button class="val-btn" onclick="goStep3()">Next: Your Contact <i class="ti ti-arrow-right"></i></button>
-    </div>
-
-    <div id="step3" style="display:none">
-      <div class="frow2">
-        <input type="text" placeholder="Full Name" />
-        <input type="tel" placeholder="Mobile Number" />
-      </div>
-      <div class="frow2">
-        <input type="email" placeholder="Email (optional)" />
-        <select><option>Purpose</option><option>Sell My Car</option><option>Just Check Value</option><option>Insurance Renewal</option><option>Car Loan</option><option>RC Transfer</option></select>
-      </div>
-      <div class="frow1">
-        <select><option>Preferred Contact Time</option><option>Morning 9am–12pm</option><option>Afternoon 12–4pm</option><option>Evening 4–8pm</option><option>Anytime</option></select>
-      </div>
-      <button class="val-btn" onclick="showResult()"><i class="ti ti-report-analytics"></i> Get Free Valuation Report</button>
-    </div>
-  </div>
-
-  <div class="result-card" id="result-card">
-    <div class="res-header">
-      <div><div class="res-car" id="rc-car">Maruti Swift VXI</div><div class="res-year" id="rc-sub">2021 · Petrol · Delhi NCR</div></div>
-      <div class="verified-badge">✓ AI Verified</div>
-    </div>
-    <div class="price-lbl">Estimated Resale Value</div>
-    <div class="price-main" id="rc-price">₹5.2 – 5.8 Lakh</div>
-    <div class="price-sub" id="rc-comps">Based on 1,240 similar recent sales</div>
-    <div class="factors">
-      <div class="factor"><div class="fn">Depreciation</div><div class="fv" style="color:#C62828" id="f1">-22%</div><div class="fbar"><div class="ffill" id="fb1" style="width:78%"></div></div></div>
-      <div class="factor"><div class="fn">Market Demand</div><div class="fv" style="color:#2E7D32">High ↑</div><div class="fbar"><div class="ffill" style="width:85%;background:#2E7D32"></div></div></div>
-      <div class="factor"><div class="fn">Condition Score</div><div class="fv">8.2 / 10</div><div class="fbar"><div class="ffill" style="width:82%"></div></div></div>
-      <div class="factor"><div class="fn">KMs Rating</div><div class="fv">Ideal Range</div><div class="fbar"><div class="ffill" style="width:72%;background:#E65100"></div></div></div>
-    </div>
-    <div class="sell-btns">
-      <button class="btn-p">Sell Instantly — Best Price</button>
-      <button class="btn-s">Download PDF Report</button>
-    </div>
-  </div>
-</section>
-
-<section class="how-sec">
-  <div style="text-align:center;max-width:560px;margin:0 auto">
-    <div style="font-size:10px;font-weight:700;color:#C62828;letter-spacing:1px;text-transform:uppercase">Simple Process</div>
-    <div style="font-size:18px;font-weight:700;margin-top:6px;color:#212121">Sell your car in 4 easy steps</div>
-  </div>
-  <div class="steps-row">
-    <div class="step-item"><div class="step-circle">1</div><div class="step-name">Enter Details</div><div class="step-desc">Brand, model, year & KMs driven</div></div>
-    <div class="step-item"><div class="step-circle">2</div><div class="step-name">AI Valuation</div><div class="step-desc">Instant accurate price estimate</div></div>
-    <div class="step-item"><div class="step-circle">3</div><div class="step-name">Free Inspection</div><div class="step-desc">Doorstep pickup & 300-point check</div></div>
-    <div class="step-item"><div class="step-circle">4</div><div class="step-name">Get Paid</div><div class="step-desc">Same-day bank transfer guaranteed</div></div>
-  </div>
-</section>
-
-<section>
-  <div class="section">
-    <div class="sec-title">All Car Brands</div>
-    <div class="sec-sub">35+ brands · 1000+ models · Every car sold in India — popular to discontinued</div>
-    <div class="tab-bar" id="brand-tabs">
-      <div class="tab-pill active" onclick="filterBrands('all',this)">All Brands</div>
-      <div class="tab-pill" onclick="filterBrands('popular',this)">Most Popular</div>
-      <div class="tab-pill" onclick="filterBrands('luxury',this)">Luxury</div>
-      <div class="tab-pill" onclick="filterBrands('ev',this)">Electric</div>
-      <div class="tab-pill" onclick="filterBrands('discontinued',this)">Discontinued</div>
-    </div>
-    <div class="brands-grid" id="brands-grid"></div>
-    <div id="models-section" style="display:none">
-      <div class="models-sec" id="models-sec-inner">
-        <div class="models-title" id="models-title">Select a model</div>
-        <div class="models-grid" id="models-grid"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section style="background:#F5F5F5;padding:36px 20px">
-  <div style="max-width:1100px;margin:0 auto">
-    <div class="sec-title">Popular Models — Quick Valuation</div>
-    <div class="sec-sub">India's most searched cars for resale value</div>
-    <div class="pop-grid" id="pop-grid"></div>
-  </div>
-</section>
-
-<section class="city-section">
-  <div style="max-width:1100px;margin:0 auto">
-    <div class="sec-title">150+ Cities We Cover</div>
-    <div class="sec-sub">From metros to tier-2 & tier-3 towns — click any city to get valuation</div>
-    <div id="city-states-grid"></div>
-  </div>
-</section>
-
-<section>
-  <div class="section">
-    <div class="sec-title">Why CarValueAI?</div>
-    <div class="sec-sub">India's most trusted AI-powered car valuation platform</div>
-    <div class="feats">
-      <div class="feat"><div class="feat-icon"><i class="ti ti-brain"></i></div><div><div class="feat-title">AI-Powered Accuracy</div><div class="feat-desc">ML model trained on 10M+ real transactions — most accurate resale price in India</div></div></div>
-      <div class="feat"><div class="feat-icon"><i class="ti ti-clock"></i></div><div><div class="feat-title">30-Second Valuation</div><div class="feat-desc">Instant result anytime, anywhere. No appointments, no waiting</div></div></div>
-      <div class="feat"><div class="feat-icon"><i class="ti ti-shield-check"></i></div><div><div class="feat-title">Zero Dealer Bias</div><div class="feat-desc">Pure data-driven price — never get underpaid by dealers again</div></div></div>
-      <div class="feat"><div class="feat-icon"><i class="ti ti-car"></i></div><div><div class="feat-title">All 35+ Brands</div><div class="feat-desc">Maruti to Mercedes, hatchback to luxury SUV — every car covered</div></div></div>
-      <div class="feat"><div class="feat-icon"><i class="ti ti-map-pin"></i></div><div><div class="feat-title">City-Specific Price</div><div class="feat-desc">Siliguri, Durgapur, Asansol — tier-3 cities have accurate local pricing too</div></div></div>
-      <div class="feat"><div class="feat-icon"><i class="ti ti-file-text"></i></div><div><div class="feat-title">Free PDF Report</div><div class="feat-desc">Full report with depreciation chart, market trend & best time to sell</div></div></div>
-    </div>
-  </div>
-</section>
-
-<section class="testimonials">
-  <div style="text-align:center">
-    <div style="font-size:10px;letter-spacing:1px;font-weight:700;color:#FFD600;text-transform:uppercase">Customer Reviews</div>
-    <div style="font-size:18px;font-weight:700;margin-top:6px">Trusted across every corner of India</div>
-  </div>
-  <div class="testi-grid">
-    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Got ₹1.2 lakh more than what the local dealer quoted. CarValueAI showed me the real market price and I negotiated confidently."</div><div class="testi-name">Rohit Sharma</div><div class="testi-city">Delhi NCR · Maruti Swift 2020</div></div>
-    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Sold my Hyundai Creta from Siliguri in 48 hours. AI valuation was exactly right — no one could fool me on price!"</div><div class="testi-name">Priya Ghosh</div><div class="testi-city">Siliguri · Hyundai Creta 2022</div></div>
-    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Even my Tata Nexon EV in Durgapur was accurately valued. Best platform for tier-2 city car sellers!"</div><div class="testi-name">Aakash Das</div><div class="testi-city">Durgapur · Tata Nexon EV 2023</div></div>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="footer-top">
-    <div>
-      <div class="footer-brand">CarValue<span>AI</span>.in</div>
-      <div class="footer-desc">India's most advanced AI-powered used car valuation platform. Accurate resale value for every car, every city — from Mumbai to Siliguri.</div>
-      <div class="footer-fchips">
-        <span class="footer-chip">Delhi NCR</span><span class="footer-chip">Mumbai</span>
-        <span class="footer-chip">Kolkata</span><span class="footer-chip">Siliguri</span>
-        <span class="footer-chip">Durgapur</span><span class="footer-chip">Patna</span>
-        <span class="footer-chip">Guwahati</span><span class="footer-chip">Ranchi</span>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <a href="#">About Us</a><a href="#">Careers</a><a href="#">Press</a><a href="#">Blog</a><a href="#">Advertise</a>
-    </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <a href="#">Car Valuation</a><a href="#">Sell My Car</a><a href="#">Buy Used Car</a>
-      <a href="#">Car Insurance</a><a href="#">Car Loan</a><a href="#">RC Transfer</a>
-    </div>
-    <div class="footer-col">
-      <h4>Support</h4>
-      <a href="#">FAQs</a><a href="#">Contact Us</a><a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a><a href="#">Sitemap</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    © 2025 CarValueAI.in · All rights reserved · Made with ❤️ in India · CIN: U74999WB2024PTC123456
-  </div>
-</footer>
-
-<script>
-const BRANDS={
-  'Maruti Suzuki':['Alto K10','Alto 800','WagonR','WagonR CNG','Swift','Swift Dzire','Baleno','Celerio','Celerio X','Ignis','S-Presso','Ertiga','XL6','Brezza','Grand Vitara','Jimny','Invicto','Fronx','Ciaz','Omni','Eeco','Gypsy','Ritz','A-Star','Zen Estilo','SX4'],
-  'Hyundai':['i10','Grand i10','Grand i10 Nios','i20','i20 Active','Elite i20','New i20','Aura','Xcent','Verna','Fluidic Verna','Elantra','Creta','Venue','Alcazar','Tucson','Exter','Ioniq 5','Ioniq 6','Santro','Sonata','Santa Fe'],
-  'Tata Motors':['Tiago','Tiago CNG','Tigor','Altroz','Punch','Nexon','Nexon EV','Harrier','Safari','Tiago EV','Punch EV','Curvv','Curvv EV','Sierra EV','Hexa','Bolt','Zest','Manza','Nano','Sumo','Aria'],
-  'Mahindra':['Bolero','Bolero Neo','Bolero Camper','Scorpio','Scorpio Classic','Scorpio-N','XUV300','XUV400 EV','XUV500','XUV700','Thar','Thar Roxx','BE 6','XEV 9e','Marazzo','KUV100','TUV300','Quanto','Xylo','Verito','e2o'],
-  'Honda':['City','City Hybrid','Amaze','Jazz','WR-V','Elevate','BR-V','CR-V','HR-V','Accord','Civic','Brio'],
-  'Toyota':['Glanza','Urban Cruiser','Hyryder','Innova Crysta','Innova HyCross','Fortuner','Fortuner Legender','Camry','Camry Hybrid','Vellfire','Land Cruiser','Etios','Etios Liva','Corolla Altis','Yaris','Prius'],
-  'Kia':['Seltos','Sonet','Carens','EV6','EV9','Carnival'],
-  'Skoda':['Rapid','Slavia','Kushaq','Kylaq','Octavia','Superb','Kodiaq','Karoq','Fabia','Yeti'],
-  'Volkswagen':['Polo','Vento','Taigun','Virtus','Tiguan','Passat','Jetta','Ameo'],
-  'Renault':['Kwid','Triber','Kiger','Duster','Captur','Lodgy','Fluence'],
-  'MG Motor':['Hector','Hector Plus','Astor','Gloster','ZS EV','Comet EV','Windsor EV'],
-  'Nissan':['Magnite','Kicks','Sunny','Terrano','Micra','Evalia'],
-  'Ford':['EcoSport','Figo','Figo Aspire','Freestyle','Endeavour','Mustang','Fiesta','Ikon'],
-  'Jeep':['Compass','Compass Trailhawk','Meridian','Wrangler','Grand Cherokee'],
-  'Citroen':['C3','C3 Aircross','eC3','C5 Aircross'],
-  'Datsun':['GO','GO+','redi-GO'],
-  'Fiat':['Punto','Linea','Avventura','Abarth 595'],
-  'BMW':['1 Series','2 Series','3 Series','5 Series','7 Series','X1','X3','X5','X7','i4','iX','iX1','M3','M5'],
-  'Mercedes-Benz':['A-Class','C-Class','E-Class','S-Class','GLA','GLC','GLE','GLS','AMG GT','EQS','EQB','EQE'],
-  'Audi':['A4','A6','A8','Q3','Q5','Q7','Q8','e-tron','e-tron GT','RS Q8','R8'],
-  'Volvo':['XC40','XC60','XC90','S60','S90','V40','C40 Recharge'],
-  'Jaguar':['XF','XE','F-Pace','E-Pace','I-Pace','F-Type','XJ'],
-  'Land Rover':['Defender','Discovery','Discovery Sport','Range Rover','Range Rover Sport','Range Rover Velar','Range Rover Evoque'],
-  'Porsche':['Cayenne','Macan','Panamera','Taycan','911','Boxster'],
-  'Lexus':['ES 300h','NX 300h','UX 300e','RX 450h','LX 500d','LC 500h'],
-  'BYD':['Atto 3','Seal','e6','Atto 2'],
-  'Ola Electric':['S1 Pro','S1 Air','S1 X','S1 X+']
-};
-const BRAND_CATS={
-  popular:['Maruti Suzuki','Hyundai','Tata Motors','Mahindra','Honda','Toyota','Kia','Renault','MG Motor','Nissan'],
-  luxury:['BMW','Mercedes-Benz','Audi','Volvo','Jaguar','Land Rover','Porsche','Lexus'],
-  ev:['BYD','Ola Electric','Tata Motors','MG Motor','Hyundai','Kia','BMW','Mercedes-Benz','Audi','Volvo'],
-  discontinued:['Ford','Datsun','Fiat']
-};
-const CITIES={
-  'West Bengal':['Kolkata','Siliguri','Durgapur','Asansol','Howrah','Bardhaman','Haldia','Kharagpur','Malda','Jalpaiguri','Cooch Behar','Bankura','Purulia','Krishnanagar','Barasat','Raiganj','Balurghat','Darjeeling'],
-  'Maharashtra':['Mumbai','Pune','Nagpur','Nashik','Aurangabad','Solapur','Amravati','Kolhapur','Thane','Navi Mumbai','Vasai-Virar','Malegaon','Latur','Dhule','Ahmednagar','Nanded'],
-  'Delhi & NCR':['Delhi NCR','Noida','Gurgaon','Faridabad','Ghaziabad','Greater Noida','Meerut'],
-  'Karnataka':['Bangalore','Mysore','Hubli','Mangalore','Belgaum','Gulbarga','Davanagere','Ballari','Shimoga','Tumkur'],
-  'Tamil Nadu':['Chennai','Coimbatore','Madurai','Trichy','Salem','Tirunelveli','Vellore','Erode','Tiruppur','Karur'],
-  'Telangana':['Hyderabad','Warangal','Nizamabad','Karimnagar','Khammam','Mahbubnagar'],
-  'Andhra Pradesh':['Visakhapatnam','Vijayawada','Guntur','Tirupati','Nellore','Kakinada','Rajahmundry'],
-  'Uttar Pradesh':['Lucknow','Kanpur','Agra','Varanasi','Meerut','Allahabad','Bareilly','Aligarh','Moradabad','Gorakhpur','Mathura','Saharanpur'],
-  'Bihar':['Patna','Gaya','Muzaffarpur','Bhagalpur','Darbhanga','Arrah','Begusarai','Munger'],
-  'Rajasthan':['Jaipur','Jodhpur','Kota','Ajmer','Bikaner','Udaipur','Alwar','Bhilwara','Sikar'],
-  'Gujarat':['Ahmedabad','Surat','Vadodara','Rajkot','Bhavnagar','Jamnagar','Gandhinagar','Anand','Mehsana','Morbi'],
-  'Madhya Pradesh':['Indore','Bhopal','Jabalpur','Gwalior','Ujjain','Sagar','Dewas','Satna','Rewa'],
-  'Punjab & Haryana':['Chandigarh','Ludhiana','Amritsar','Jalandhar','Patiala','Ambala','Rohtak','Hisar','Karnal'],
-  'Jharkhand':['Ranchi','Jamshedpur','Dhanbad','Bokaro','Hazaribagh','Deoghar','Giridih'],
-  'Assam & NE':['Guwahati','Dibrugarh','Jorhat','Silchar','Shillong','Imphal','Aizawl','Agartala','Itanagar','Kohima'],
-  'Odisha':['Bhubaneswar','Cuttack','Rourkela','Sambalpur','Berhampur','Puri','Balasore'],
-  'Kerala':['Kochi','Thiruvananthapuram','Kozhikode','Thrissur','Malappuram','Kollam','Kannur'],
-  'Himachal & J&K':['Shimla','Dharamshala','Jammu','Srinagar','Pathankot','Ludhiana'],
-  'Chhattisgarh':['Raipur','Bilaspur','Durg','Bhilai','Korba','Rajnandgaon'],
-  'Uttarakhand':['Dehradun','Haridwar','Roorkee','Haldwani','Rishikesh','Nainital']
-};
-const POPULAR_CARS=[
-  {name:'Maruti Swift',brand:'Maruti Suzuki',e:'🚗',p:'₹3.5–7.2L'},
-  {name:'Hyundai Creta',brand:'Hyundai',e:'🚙',p:'₹8.5–17L'},
-  {name:'Tata Nexon',brand:'Tata Motors',e:'🚗',p:'₹6.5–13L'},
-  {name:'Honda City',brand:'Honda',e:'🏎',p:'₹4.5–12L'},
-  {name:'Maruti WagonR',brand:'Maruti Suzuki',e:'🚘',p:'₹3–6.5L'},
-  {name:'Hyundai i20',brand:'Hyundai',e:'🚗',p:'₹5.5–10L'},
-  {name:'Mahindra Scorpio-N',brand:'Mahindra',e:'🛻',p:'₹12–22L'},
-  {name:'Maruti Baleno',brand:'Maruti Suzuki',e:'🚗',p:'₹4.5–9L'},
-  {name:'Kia Seltos',brand:'Kia',e:'🚙',p:'₹9–18L'},
-  {name:'Toyota Fortuner',brand:'Toyota',e:'🏔',p:'₹20–34L'},
-  {name:'Tata Punch EV',brand:'Tata Motors',e:'⚡',p:'₹8–14L'},
-  {name:'Hyundai Grand i10',brand:'Hyundai',e:'🚗',p:'₹2.5–5.5L'}
-];
-
-let selFuelVal='Petrol', selCondVal='Good', selCityVal='';
-const allCities=[];
-Object.values(CITIES).forEach(arr=>arr.forEach(c=>allCities.push(c)));
-
-function selFuel(el,f){document.querySelectorAll('.fuel-btn').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');selFuelVal=f;}
-function selCond(el,c){document.querySelectorAll('.cond-btn').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');selCondVal=c;}
-function setCity(c){
-  selCityVal=c;
-  document.getElementById('city-inp').value=c;
-  document.getElementById('city-results').style.display='none';
-  document.querySelectorAll('.qcity').forEach(ch=>ch.classList.toggle('sel',ch.textContent===c));
-}
-function searchCity(q){
-  const r=document.getElementById('city-results');
-  if(!q){r.style.display='none';return;}
-  const m=allCities.filter(c=>c.toLowerCase().includes(q.toLowerCase())).slice(0,10);
-  if(!m.length){r.style.display='none';return;}
-  r.innerHTML=m.map(c=>`<div class="city-ri" onclick="setCity('${c}')">${c}</div>`).join('');
-  r.style.display='block';
-}
-document.addEventListener('click',function(e){if(!e.target.closest('.city-wrap'))document.getElementById('city-results').style.display='none';});
-function loadModels(brand){
-  const ms=document.getElementById('ms');
-  ms.innerHTML='<option value="">Select Model</option>';
-  document.getElementById('vs').innerHTML='<option value="">Select Variant</option>';
-  if(!brand||!BRANDS[brand])return;
-  BRANDS[brand].forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;ms.appendChild(o);});
-}
-document.getElementById('ms').addEventListener('change',function(){
-  const vs=document.getElementById('vs');
-  vs.innerHTML='<option value="">Select Variant</option>';
-  if(!this.value)return;
-  ['LXI / Base','VXI / S','ZXI / SX','ZXI+ / SX (O)','ZXI AMT / S+ AMT','Top Variant'].forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;vs.appendChild(o);});
-});
-function goStep2(){
-  document.getElementById('step1').style.display='none';
-  document.getElementById('step2').style.display='block';
-  document.getElementById('tab1').className='step-tab done';
-  document.getElementById('tab2').className='step-tab active';
-}
-function goStep3(){
-  document.getElementById('step2').style.display='none';
-  document.getElementById('step3').style.display='block';
-  document.getElementById('tab2').className='step-tab done';
-  document.getElementById('tab3').className='step-tab active';
-}
-function showResult(){
-  const brand=document.getElementById('bs').value||'Maruti Suzuki';
-  const model=document.getElementById('ms').value||'Swift';
-  const year=parseInt(document.getElementById('yr').value)||2021;
-  const kms=document.getElementById('km').value||'45,000';
-  const city=selCityVal||document.getElementById('city-inp').value||'Delhi NCR';
-  const age=2025-year;
-  const base=brand.includes('BMW')||brand.includes('Mercedes')||brand.includes('Audi')||brand.includes('Porsche')?52:
-    brand.includes('Land Rover')||brand.includes('Jaguar')||brand.includes('Lexus')||brand.includes('Volvo')?42:
-    brand.includes('Toyota')||brand.includes('Kia')?15:
-    brand.includes('Mahindra')||brand.includes('Tata')?11:7.5;
-  const dep=Math.max(0.3,1-age*0.09);
-  const lo=(base*dep*0.9).toFixed(1);
-  const hi=(base*dep*1.1).toFixed(1);
-  const depPct=Math.min(70,Math.round(age*9));
-  document.getElementById('rc-car').textContent=brand+' '+model;
-  document.getElementById('rc-sub').textContent=year+' · '+selFuelVal+' · '+kms+' km · '+city;
-  document.getElementById('rc-price').textContent='₹'+lo+' – '+hi+' Lakh';
-  document.getElementById('rc-comps').textContent='Based on '+(Math.floor(800+Math.random()*600))+' similar recent sales in '+city;
-  document.getElementById('f1').textContent='-'+depPct+'% from new price';
-  document.getElementById('fb1').style.width=(100-depPct)+'%';
-  const rc=document.getElementById('result-card');
-  rc.style.display='block';
-  rc.scrollIntoView({behavior:'smooth',block:'center'});
-}
-function filterBrands(f,el){
-  document.querySelectorAll('#brand-tabs .tab-pill').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  const keys=Object.keys(BRANDS);
-  const show=f==='all'?keys:(BRAND_CATS[f]||keys);
-  document.getElementById('brands-grid').innerHTML=show.map(b=>`<div class="brand-card" onclick="showModels2('${b}',this)"><div class="brand-abbr">${b.substring(0,2).toUpperCase()}</div><div class="brand-name">${b}</div><div class="brand-count">${BRANDS[b].length} models</div></div>`).join('');
-  document.getElementById('models-section').style.display='none';
-}
-function showModels2(brand,el){
-  document.querySelectorAll('.brand-card').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('models-title').textContent=brand+' — All '+BRANDS[brand].length+' Models';
-  document.getElementById('models-grid').innerHTML=BRANDS[brand].map(m=>`<div class="mpill" onclick="selectQuickModel('${brand}','${m}',this)">${m}</div>`).join('');
-  const sec=document.getElementById('models-section');
-  sec.style.display='block';
-  document.getElementById('models-sec-inner').style.display='block';
-  sec.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-function selectQuickModel(brand,model,el){
-  document.querySelectorAll('.mpill').forEach(p=>p.classList.remove('sel'));
-  el.classList.add('sel');
-  document.getElementById('bs').value=brand;
-  loadModels(brand);
-  setTimeout(()=>{document.getElementById('ms').value=model;},60);
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-(function init(){
-  document.getElementById('brands-grid').innerHTML=Object.keys(BRANDS).map(b=>`<div class="brand-card" onclick="showModels2('${b}',this)"><div class="brand-abbr">${b.substring(0,2).toUpperCase()}</div><div class="brand-name">${b}</div><div class="brand-count">${BRANDS[b].length} models</div></div>`).join('');
-  document.getElementById('pop-grid').innerHTML=POPULAR_CARS.map(p=>`<div class="pop-card"><div class="pop-img">${p.e}</div><div class="pop-body"><div class="pop-name">${p.name}</div><div class="pop-brand">${p.brand}</div><div class="pop-price">${p.p} resale value</div></div></div>`).join('');
-  document.getElementById('city-states-grid').innerHTML=Object.entries(CITIES).map(([state,cities])=>`<div class="state-group"><div class="state-name">${state}</div><div class="city-chips-row">${cities.map(c=>`<span class="city-chip" onclick="setCity('${c}');window.scrollTo({top:0,behavior:'smooth'})">${c}</span>`).join('')}</div></div>`).join('');
-})();
 </script>
 </body>
 </html>
