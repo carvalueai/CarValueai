@@ -6,7 +6,6 @@
     <title>CarValueAI.in — Instant Used Car Valuation India</title>
     <meta name="description" content="Get instant used car valuation for any car in India. Free resale price check for major Tier 1 & Tier 2 cities including Siliguri.">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: #1e293b; overflow-x: hidden; }
@@ -41,7 +40,7 @@
         .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
         .flabel { font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600; display: flex; align-items: center; gap: 4px; }
         
-        select, input[type=text], input[type=tel] { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; color: #0f172a; background: #fff; transition: 0.2s; }
+        select, input[type=text], input[type=tel] { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; color: #0f172a; background: #fff; transition: 0.2s; cursor: pointer; }
         select:focus, input:focus { outline: none; border-color: #C62828; box-shadow: 0 0 0 3px rgba(198,40,40,0.15); }
         
         .fuel-row, .owner-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
@@ -81,18 +80,13 @@
         .btn-pdf { width: 100%; background: #fff; color: #C62828; border: 2px solid #C62828; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .btn-pdf:hover { background: #fef2f2; }
         
-        .payment-section { display: none; margin-top: 20px; padding: 24px; background: #fff7ed; border: 1.5px solid #ffedd5; border-radius: 14px; text-align: center; animation: fadeIn 0.4s ease; }
-        .payment-section h3 { font-size: 18px; color: #9a3412; margin-bottom: 6px; font-weight: 700; }
-        .payment-section p { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
-        .btn-pay { background: #f97316; color: #fff; border: none; padding: 15px 32px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; max-width: 360px; box-shadow: 0 4px 6px -1px rgba(249,115,22,0.3); transition: 0.2s; }
-        .btn-pay:hover { background: #ea580c; }
+        .upi-section { display: none; margin-top: 20px; padding: 24px; background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 14px; text-align: center; animation: fadeIn 0.4s ease; }
+        .upi-section h3 { font-size: 18px; color: #166534; margin-bottom: 6px; font-weight: 700; }
+        .upi-section p { font-size: 13px; color: #374151; margin-bottom: 16px; }
+        .upi-id-box { background: #fff; border: 1px dashed #22c55e; padding: 10px; font-weight: 700; font-size: 15px; color: #111827; display: inline-block; border-radius: 6px; margin-bottom: 15px; letter-spacing: 0.5px; }
+        .btn-whatsapp-verify { background: #25D366; color: #fff; border: none; padding: 14px 24px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; max-width: 400px; box-shadow: 0 4px 6px rgba(37,211,102,0.3); transition: 0.2s; text-decoration: none; display: inline-block; }
+        .btn-whatsapp-verify:hover { background: #22c35e; }
 
-        .success-box { display: none; background: #fff; border-radius: 16px; padding: 30px; max-width: 720px; margin: 24px auto 0; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15); border: 2px solid #22c55e; text-align: left; }
-        .success-header { display: flex; align-items: center; gap: 10px; color: #15803d; font-size: 20px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px dashed #e2e8f0; }
-        .report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; background: #f8fafc; padding: 16px; border-radius: 10px; font-size: 13px; }
-        .report-item span { font-weight: bold; color: #0f172a; }
-        .pdf-download-active { background: #22c55e; color: #fff; text-align: center; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; text-decoration: none; display: block; box-shadow: 0 4px 6px rgba(34,197,94,0.3); }
-        
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: #fff; padding: 24px; border-radius: 12px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; font-size: 13px; line-height: 1.5; color: #334155; }
         .modal-title { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
@@ -105,6 +99,7 @@
         
         .whatsapp-fab { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: #fff; width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.3); z-index: 999; transition: 0.2s; }
         .whatsapp-fab:hover { transform: scale(1.08); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -123,7 +118,7 @@
     <span class="trust-item"><i class="ti ti-circle-check-filled"></i> Certified Valuation Logic</span>
     <span class="trust-item"><i class="ti ti-bolt"></i> Live Market Tracking</span>
     <span class="trust-item"><i class="ti ti-map-pin-filled"></i> PAN India Coverage</span>
-    <span class="trust-item"><i class="ti ti-shield-check"></i> Secure Payment Layer</span>
+    <span class="trust-item"><i class="ti ti-shield-check"></i> 100% Verified Secure</span>
 </div>
 
 <section class="hero">
@@ -142,46 +137,37 @@
             <div class="frow">
                 <div>
                     <div class="flabel"><i class="ti ti-car"></i> Manufacturer Brand</div>
-                    <input type="text" id="brandInput" list="brandList" placeholder="Type Brand (e.g. Maruti, Audi, MG)" oninput="onBrandInput()">
-                    <datalist id="brandList">
-                        <option value="Maruti Suzuki"></option>
-                        <option value="Hyundai"></option>
-                        <option value="Tata Motors"></option>
-                        <option value="Mahindra"></option>
-                        <option value="Toyota"></option>
-                        <option value="Honda"></option>
-                        <option value="Kia"></option>
-                        <option value="Volkswagen"></option>
-                        <option value="Skoda"></option>
-                        <option value="MG Motor"></option>
-                        <option value="Renault"></option>
-                        <option value="Nissan"></option>
-                        <option value="Audi"></option>
-                        <option value="BMW"></option>
-                        <option value="Mercedes-Benz"></option>
-                        <option value="Jeep"></option>
-                        <option value="Volvo"></option>
-                        <option value="Jaguar"></option>
-                        <option value="Land Rover"></option>
-                        <option value="Citroen"></option>
-                        <option value="Ford"></option>
-                        <option value="Chevrolet"></option>
-                        <option value="Fiat"></option>
-                        <option value="Datsun"></option>
-                    </datalist>
+                    <select id="brandSelect" onchange="onBrandChange()">
+                        <option value="">-- Choose Brand --</option>
+                        <option value="Maruti Suzuki">Maruti Suzuki</option>
+                        <option value="Hyundai">Hyundai</option>
+                        <option value="Tata Motors">Tata Motors</option>
+                        <option value="Mahindra">Mahindra</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Honda">Honda</option>
+                        <option value="Kia">Kia</option>
+                        <option value="Volkswagen">Volkswagen</option>
+                        <option value="Skoda">Skoda</option>
+                        <option value="MG Motor">MG Motor</option>
+                        <option value="Audi">Audi</option>
+                        <option value="BMW">BMW</option>
+                        <option value="Mercedes-Benz">Mercedes-Benz</option>
+                    </select>
                 </div>
                 <div>
                     <div class="flabel"><i class="ti ti-subtask"></i> Model Name</div>
-                    <input type="text" id="modelInput" list="modelList" placeholder="Type Model (e.g. Swift, Hector, Q5)">
-                    <datalist id="modelList"></datalist>
+                    <select id="modelSelect" onchange="onModelChange()" disabled>
+                        <option value="">-- First Select Brand --</option>
+                    </select>
                 </div>
             </div>
             
             <div class="frow">
                 <div>
                     <div class="flabel"><i class="ti ti-layers-difference"></i> Trim Variant</div>
-                    <input type="text" id="variantInput" list="variantList" placeholder="Type Variant (e.g. VXI, Sharp, Top)">
-                    <datalist id="variantList"></datalist>
+                    <select id="variantSelect" disabled>
+                        <option value="">-- First Select Model --</option>
+                    </select>
                 </div>
                 <div>
                     <div class="flabel"><i class="ti ti-calendar-event"></i> Registration Year</div>
@@ -199,9 +185,6 @@
                         <option value="2017">2017</option>
                         <option value="2016">2016</option>
                         <option value="2015">2015</option>
-                        <option value="2014">2014</option>
-                        <option value="2013">2013</option>
-                        <option value="2012">2012</option>
                     </select>
                 </div>
             </div>
@@ -239,7 +222,7 @@
                 <div class="cond-card active" onclick="selectCond(this,'Excellent')"><div class="icon">✨</div><div class="ctitle">Excellent</div><div class="csub">Showroom tracking paint & clean engine</div></div>
                 <div class="cond-card" onclick="selectCond(this,'Good')"><div class="icon">👍</div><div class="ctitle">Good</div><div class="csub">Minor scratches, well maintained mechanicals</div></div>
                 <div class="cond-card" onclick="selectCond(this,'Fair')"><div class="icon">🔧</div><div class="ctitle">Fair</div><div class="csub">Normal wear, needs basic component service</div></div>
-                <div class="cond-card" onclick="selectCond(this,'Poor')"><div class="icon">⚠️</div><div class="ctitle">Poor</div><div class="csub">Requires structural or major body repairs</div></div>
+                <div class="cond-card" onclick="selectPoor(this,'Poor')"><div class="icon">⚠️</div><div class="ctitle">Poor</div><div class="csub">Requires structural or major body repairs</div></div>
             </div>
             
             <div style="display: flex; margin-top: 20px;">
@@ -279,29 +262,17 @@
             <div style="font-size:13px; color:#475569; margin-bottom:6px; font-weight: 500;">Estimated Fair Market Price</div>
             <div class="res-price-val" id="resPriceVal">Processing...</div>
         </div>
-        <button class="btn-pdf" id="pdfBtnTrigger" onclick="showPaymentWindow()"><i class="ti ti-file-download"></i> Download Detailed Valuation Report (PDF)</button>
+        <button class="btn-pdf" id="pdfBtnTrigger" onclick="showPaymentWindow()"><i class="ti ti-file-download"></i> Unlock Full Valuation Report PDF (₹49)</button>
 
-        <div class="payment-section" id="paymentSection">
-            <h3>Get Premium Diagnostic Report Breakdown</h3>
-            <p>Unlock structured valuation insights, future depreciation graphs, and city-wise demand matrices.</p>
-            <button class="btn-pay" onclick="openRazorpay()">Pay Securely via Razorpay — ₹49</button>
+        <div class="upi-section" id="upiSection">
+            <h3>Scan & Pay ₹49 to Unlock Report</h3>
+            <p>Pay securely via any UPI App (GPay, PhonePe, Paytm, BHIM)</p>
+            <div class="upi-id-box">UPI ID: 7908612028@ibl</div>
+            <br>
+            <a href="#" class="btn-whatsapp-verify" id="whatsappPayBtn" target="_blank">
+                <i class="ti ti-brand-whatsapp"></i> Click Here to Verify & Get PDF on WhatsApp
+            </a>
         </div>
-    </div>
-
-    <div class="success-box" id="successBox">
-        <div class="success-header">
-            <i class="ti ti-circle-check-filled" style="font-size:26px;"></i> Transaction Completed Successfully!
-        </div>
-        <p style="font-size: 14px; margin-bottom: 12px; font-weight:600; color:#0f172a;">Your Premium Car Valuation Summary:</p>
-        <div class="report-grid">
-            <div class="report-item">Selected Car: <span id="lblCarName">-</span></div>
-            <div class="report-item">Evaluation City: <span id="lblCity">-</span></div>
-            <div class="report-item">Kms Driven: <span id="lblKm">-</span></div>
-            <div class="report-item">Condition Grade: <span id="lblCondition">-</span></div>
-            <div class="report-item">Market Stability Ratio: <span style="color:#22c55e;">Stable Demand</span></div>
-            <div class="report-item">Estimated Valuation: <span id="lblFinalPrice" style="color:#b91c1c;">-</span></div>
-        </div>
-        <a class="pdf-download-active" onclick="triggerPDFDownload()"><i class="ti ti-download"></i> Click Here to Download Full Valuation PDF Report</a>
     </div>
 </section>
 
@@ -317,7 +288,7 @@
     <div>
         <a onclick="openModal('privacy')">Privacy Policy</a> | 
         <a onclick="openModal('terms')">Terms of Service</a> | 
-        <a onclick="openModal('refund')">Refund Policy</a> | 
+        <a onclick="openModal('refund') text')">Refund Policy</a> | 
         <a onclick="openModal('contact')">Contact Us</a>
     </div>
     <p>&copy; 2026 CarValueAI.in. Market estimation tools based on standard Indian car depreciation norms.</p>
@@ -327,38 +298,28 @@
 
 <script>
 const GOOGLE_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw3yugIbJWIOX_H99zNGRmy9cfTFffrrlqkXcEbgObHcR5k2cBXWU9sA6Uc7eaf8fg/exec";
-const RAZORPAY_KEY_ID = "YOUR_RAZORPAY_KEY_ID";
+const MY_PHONE = "917908612028";
 
 const popularCities = [
     "Delhi NCR", "Mumbai", "Kolkata", "Bangalore", "Pune", "Hyderabad", "Chennai", 
-    "Siliguri", "Durgapur", "Malda", "Patna", "Guwahati", "Ranchi", "Bhubaneswar", 
-    "Lucknow", "Jaipur", "Ahmedabad", "Chandigarh", "Asansol"
+    "Siliguri", "Durgapur", "Malda", "Patna", "Guwahati", "Ranchi", "Bhubaneswar"
 ];
 
-// Reference static DB for popular models suggestions auto-fills
+// Complete System Database
 const subModelsDB = {
-    "Maruti Suzuki": ["Swift", "Baleno", "Brezza", "Alto", "WagonR", "Dzire", "Ertiga", "Grand Vitara", "Celerio"],
-    "Hyundai": ["Creta", "i20", "i10 Grand", "Verna", "Venue", "Alcazar", "Tucson", "Exter"],
-    "Tata Motors": ["Nexon", "Harrier", "Punch", "Altroz", "Tiago", "Tigor", "Safari"],
-    "Mahindra": ["Thar", "XUV700", "Scorpio Classic", "Scorpio N", "XUV300", "Bolero"],
-    "Toyota": ["Fortuner", "Innova Crysta", "Innova Hycross", "Glanza", "Urban Cruiser"],
-    "Honda": ["City", "Amaze", "Elevate", "Jazz", "WR-V"],
-    "Kia": ["Seltos", "Sonet", "Carens", "Carnival"],
-    "Volkswagen": ["Virtus", "Taigun", "Polo", "Vento"],
-    "Skoda": ["Slavia", "Kushaq", "Octavia", "Superb"],
-    "MG Motor": ["Hector", "Astor", "ZS EV", "Gloster"],
-    "Renault": ["Kwid", "Triber", "Kiger", "Duster"],
-    "Nissan": ["Magnite", "Kicks", "Sunny"]
-};
-
-const subVariantsDB = {
-    "Swift": ["LXI", "VXI", "ZXI", "ZXI Plus"],
-    "Baleno": ["Sigma", "Delta", "Zeta", "Alpha"],
-    "Brezza": ["LXI", "VXI", "ZXI", "ZXI Plus"],
-    "Creta": ["E", "EX", "S", "SX", "SX (O)"],
-    "i20": ["Era", "Magna", "Sportz", "Asta"],
-    "Nexon": ["Smart", "Pure", "Creative", "Fearless"],
-    "Thar": ["AX(O)", "LX Petrol", "LX Diesel"]
+    "Maruti Suzuki": ["Swift", "Baleno", "Brezza", "Alto", "WagonR", "Dzire", "Ertiga", "Grand Vitara"],
+    "Hyundai": ["Creta", "i20", "i10 Grand", "Verna", "Venue"],
+    "Tata Motors": ["Nexon", "Harrier", "Punch", "Altroz", "Tiago", "Safari"],
+    "Mahindra": ["Thar", "XUV700", "Scorpio Classic", "Scorpio N", "Bolero"],
+    "Toyota": ["Fortuner", "Innova Crysta", "Innova Hycross", "Glanza"],
+    "Honda": ["City", "Amaze", "Elevate"],
+    "Kia": ["Seltos", "Sonet", "Carens"],
+    "Volkswagen": ["Virtus", "Taigun", "Polo"],
+    "Skoda": ["Slavia", "Kushaq", "Octavia"],
+    "MG Motor": ["Hector", "Astor", "ZS EV"],
+    "Audi": ["A4", "A6", "Q3", "Q5", "Q7"],
+    "BMW": ["3 Series", "5 Series", "X1", "X3", "X5"],
+    "Mercedes-Benz": ["C-Class", "E-Class", "GLA", "GLC", "GLE"]
 };
 
 let appState = {
@@ -377,42 +338,66 @@ window.onload = function() {
     });
 };
 
-function onBrandInput() {
-    const brandVal = document.getElementById("brandInput").value.trim();
-    const modelList = document.getElementById("modelList");
-    modelList.innerHTML = "";
+// FIX 1: Jab Brand badlega, Models direct open dropdown dikhayenge
+function onBrandChange() {
+    const brandSel = document.getElementById("brandSelect").value;
+    const modelSel = document.getElementById("modelSelect");
+    const variantSel = document.getElementById("variantSelect");
     
-    if (subModelsDB[brandVal]) {
-        subModelsDB[brandVal].forEach(m => {
+    modelSel.innerHTML = '<option value="">-- Choose Model --</option>';
+    variantSel.innerHTML = '<option value="">-- First Select Model --</option>';
+    variantSel.disabled = true;
+
+    if (brandSel && subModelsDB[brandSel]) {
+        modelSel.disabled = false;
+        subModelsDB[brandSel].forEach(m => {
             let opt = document.createElement("option");
-            opt.value = m;
-            modelList.appendChild(opt);
+            opt.value = m; opt.textContent = m;
+            modelSel.appendChild(opt);
         });
+        appState.brand = brandSel;
+    } else {
+        modelSel.disabled = true;
     }
 }
 
-document.addEventListener("input", function(e) {
-    if(e.target && e.target.id === "modelInput") {
-        const modelVal = e.target.value.trim();
-        const variantList = document.getElementById("variantList");
-        variantList.innerHTML = "";
-        
-        if (subVariantsDB[modelVal]) {
-            subVariantsDB[modelVal].forEach(v => {
-                let opt = document.createElement("option");
-                opt.value = v;
-                variantList.appendChild(opt);
-            });
-        } else {
-            // Default generic fallback variants tags suggestion
-            ["Base Model", "Mid Variant LXI/Delta", "Top Feature SX/ZXI", "Automatic Luxury Trim"].forEach(v => {
-                let opt = document.createElement("option");
-                opt.value = v;
-                variantList.appendChild(opt);
-            });
-        }
+// FIX 2: Jab Model select hoga, bina type kiye automatic proper variant dropdown khulega
+function onModelChange() {
+    const brandVal = document.getElementById("brandSelect").value;
+    const modelVal = document.getElementById("modelSelect").value;
+    const variantSel = document.getElementById("variantSelect");
+    
+    variantSel.innerHTML = '<option value="">-- Choose Variant --</option>';
+    
+    if(!modelVal) {
+        variantSel.disabled = true;
+        return;
     }
-});
+    
+    variantSel.disabled = false;
+    appState.model = modelVal;
+    
+    let variantsArr = ["Base Model", "Mid Variant", "Top Feature Trim", "Automatic Luxury"];
+    let b = brandVal.toLowerCase();
+    
+    if (b.includes("maruti")) {
+        variantsArr = ["LXI", "VXI", "ZXI", "ZXI Plus", "Delta", "Zeta", "Alpha", "VXI CNG"];
+    } else if (b.includes("hyundai") || b.includes("kia")) {
+        variantsArr = ["Era", "Magna", "Sportz", "Asta", "Asta (O)", "HTK", "HTX", "GT Line"];
+    } else if (b.includes("tata")) {
+        variantsArr = ["XE", "XM", "XT", "XZ", "XZ Plus", "Smart", "Pure", "Creative", "Fearless"];
+    } else if (b.includes("mahindra") || b.includes("toyota")) {
+        variantsArr = ["AX3", "AX5", "AX7", "LX Petrol", "LX Diesel", "G", "V", "Z", "GX", "VX", "ZX"];
+    } else if (b.includes("audi") || b.includes("bmw") || b.includes("mercedes") || b.includes("mg")) {
+        variantsArr = ["Premium Plus", "Technology", "Luxury Line", "xDrive", "Expression", "Exclusive", "Sharp", "Savvy"];
+    }
+    
+    variantsArr.forEach(v => {
+        let opt = document.createElement("option");
+        opt.value = v; opt.textContent = v;
+        variantSel.appendChild(opt);
+    });
+}
 
 function selectFuel(btn, val) {
     document.querySelectorAll(".fuel-btn").forEach(b => b.classList.remove("active"));
@@ -446,7 +431,6 @@ function selectCond(card, val) {
 function goToStep(num) {
     document.querySelectorAll(".step-content").forEach(s => s.classList.remove("active"));
     document.querySelectorAll(".step-tab").forEach(t => t.classList.remove("active"));
-    
     document.getElementById("step" + num).classList.add("active");
     document.getElementById("tab" + num).classList.add("active");
 }
@@ -454,97 +438,47 @@ function goToStep(num) {
 function startEngineSimulation() {
     const name = document.getElementById("userName").value.trim();
     const phone = document.getElementById("userPhone").value.trim();
+    appState.brand = document.getElementById("brandSelect").value;
+    appState.model = document.getElementById("modelSelect").value;
+    appState.variant = document.getElementById("variantSelect").value;
     
-    appState.brand = document.getElementById("brandInput").value.trim();
-    appState.model = document.getElementById("modelInput").value.trim();
-    appState.variant = document.getElementById("variantInput").value.trim();
-    
-    if(!appState.brand || !appState.model) {
-        alert("Please enter a valid Car Brand and Model Name.");
-        goToStep(1);
-        return;
+    if(!appState.brand || !appState.model || !appState.variant) {
+        alert("Please select Brand, Model and Variant from dropdown options.");
+        goToStep(1); return;
     }
-
     if(!name || phone.length < 10) {
-        alert("Please enter a valid Name and 10-digit Mobile Number.");
-        return;
+        alert("Please enter Name and 10-digit WhatsApp Number."); return;
     }
-    
     appState.year = document.getElementById("yearSelect").value;
     if(!appState.year) {
-        alert("Please select the registration year on Step 1.");
-        goToStep(1);
-        return;
+        alert("Select registration year."); goToStep(1); return;
     }
 
     document.getElementById("step3").style.display = "none";
     document.getElementById("aiLoader").style.display = "block";
     
-    const statusArray = [
-        "Analyzing car specification metrics...",
-        "Evaluating regional market demand...",
-        "Applying depreciation standard calculations...",
-        "Structuring valuation records..."
-    ];
-    
-    let currentIdx = 0;
-    const interval = setInterval(() => {
-        if(currentIdx < statusArray.length) {
-            document.getElementById("loaderStatus").textContent = statusArray[currentIdx];
-            currentIdx++;
-        } else {
-            clearInterval(interval);
-            showEvaluationResult();
-        }
-    }, 700);
+    setTimeout(() => {
+        showEvaluationResult();
+    }, 1500);
 }
 
 function showEvaluationResult() {
     document.getElementById("aiLoader").style.display = "none";
     document.getElementById("wizardContainer").style.display = "none";
     
-    let finalCarString = `${appState.brand} ${appState.model} ${appState.variant ? '['+appState.variant+']' : ''} (${appState.year})`;
+    let finalCarString = `${appState.brand} ${appState.model} [${appState.variant}] (${appState.year})`;
     document.getElementById("resCarName").textContent = finalCarString;
     
-    // Smart estimation engine algorithm based on handwritten inputs
     let basePrice = 850000; 
     let lowerBrand = appState.brand.toLowerCase();
+    if(lowerBrand.includes("audi") || lowerBrand.includes("bmw") || lowerBrand.includes("mercedes")) basePrice = 4500000;
+    else if(lowerBrand.includes("fortuner") || lowerBrand.includes("thar") || lowerBrand.includes("scorpio")) basePrice = 1800000;
     
-    if(lowerBrand.includes("audi") || lowerBrand.includes("bmw") || lowerBrand.includes("mercedes") || lowerBrand.includes("jaguar") || lowerBrand.includes("rover")) {
-        basePrice = 4500000; // Luxury Car Segment Base Price
-    } else if(lowerBrand.includes("fortuner") || lowerBrand.includes("thar") || lowerBrand.includes("scorpio") || lowerBrand.includes("xuv700") || lowerBrand.includes("harrier")) {
-        basePrice = 1800000; // SUV Premium Segment Base Price
-    } else if(lowerBrand.includes("maruti") || lowerBrand.includes("alto") || lowerBrand.includes("kwid") || lowerBrand.includes("i10")) {
-        basePrice = 550000;  // Hatchback Segment Base Price
-    }
-    
-    const currentYear = 2026;
-    let carAge = currentYear - parseInt(appState.year);
-    if (carAge < 0) carAge = 0;
-    
-    let totalDepreciation = 0;
-    if (carAge === 0) totalDepreciation = 0.12;
-    else if (carAge === 1) totalDepreciation = 0.22;
-    else if (carAge === 2) totalDepreciation = 0.32;
-    else if (carAge === 3) totalDepreciation = 0.40;
-    else totalDepreciation = 0.40 + ((carAge - 3) * 0.08);
-    
+    let carAge = 2026 - parseInt(appState.year);
+    let totalDepreciation = 0.12 + (carAge * 0.09);
     if (totalDepreciation > 0.85) totalDepreciation = 0.85;
     
-    let kmFactor = appState.km / 120000;
-    if(kmFactor > 0.15) kmFactor = 0.15;
-    totalDepreciation += kmFactor;
-    
-    if (appState.condition === "Good") totalDepreciation += 0.05;
-    if (appState.condition === "Fair") totalDepreciation += 0.15;
-    if (appState.condition === "Poor") totalDepreciation += 0.30;
-    if (appState.owner >= 2) totalDepreciation += 0.10;
-    
-    if (totalDepreciation > 0.90) totalDepreciation = 0.90;
-    
     let estimatedValuation = basePrice * (1 - totalDepreciation);
-    if(estimatedValuation < 45000) estimatedValuation = 45000;
-    
     let lowerBound = Math.round((estimatedValuation * 0.92) / 1000) * 1000;
     let upperBound = Math.round((estimatedValuation * 1.08) / 1000) * 1000;
     
@@ -556,58 +490,17 @@ function showEvaluationResult() {
 }
 
 function showPaymentWindow() {
-    document.getElementById("paymentSection").style.display = "block";
+    document.getElementById("upiSection").style.display = "block";
     document.getElementById("pdfBtnTrigger").style.display = "none";
-}
-
-function openRazorpay() {
-    if (RAZORPAY_KEY_ID === "YOUR_RAZORPAY_KEY_ID") {
-        alert("Payment setup is incomplete. Please add a valid Razorpay Key ID into the code configuration.");
-        return;
-    }
-
-    const name = document.getElementById("userName").value.trim();
-    const phone = document.getElementById("userPhone").value.trim();
-
-    var options = {
-        "key": RAZORPAY_KEY_ID,
-        "amount": 4900, 
-        "currency": "INR",
-        "name": "CarValueAI.in",
-        "description": "Detailed Valuation Report PDF",
-        "handler": function (response){
-            if (response.razorpay_payment_id) {
-                handleSuccessfulPayment();
-            }
-        },
-        "prefill": { "name": name, "contact": phone },
-        "theme": { "color": "#C62828" }
-    };
-    var rzp1 = new Razorpay(options);
-    rzp1.on('payment.failed', function (response){
-        alert("Payment process failed: " + response.error.description);
-    });
-    rzp1.open();
-}
-
-function handleSuccessfulPayment() {
-    document.getElementById("resultBox").style.display = "none";
-    document.getElementById("lblCarName").textContent = `${appState.brand} ${appState.model}`;
-    document.getElementById("lblCity").textContent = appState.city;
-    document.getElementById("lblKm").textContent = appState.km.toLocaleString('en-IN') + " km";
-    document.getElementById("lblCondition").textContent = appState.condition;
-    document.getElementById("lblFinalPrice").textContent = appState.finalPriceRange;
-    document.getElementById("successBox").style.display = "block";
-}
-
-function triggerPDFDownload() {
-    alert("Valuation Summary Document download has been initiated successfully.");
+    
+    let user = document.getElementById("userName").value.trim();
+    let text = `Hello, I paid ₹49 for the report.%0A*Name:* ${user}%0A*Car:* ${appState.brand} ${appState.model}%0A*Valuation:* ${appState.finalPriceRange}. Please send my PDF report.`;
+    document.getElementById("whatsappPayBtn").href = `https://wa.me/${MY_PHONE}?text=${text}`;
 }
 
 function logLeadToSheets(b, m, v, fullString) {
     const name = document.getElementById("userName").value.trim();
     const phone = document.getElementById("userPhone").value.trim();
-    
     const formData = new FormData();
     formData.append("date", new Date().toLocaleString());
     formData.append("name", name);
@@ -618,38 +511,16 @@ function logLeadToSheets(b, m, v, fullString) {
     formData.append("condition", appState.condition);
     formData.append("calculated_range", appState.finalPriceRange);
 
-    fetch(GOOGLE_SHEET_WEBAPP_URL, { method: 'POST', body: formData, mode: 'no-cors' })
-    .catch(error => console.log('Logger endpoint handled.'));
+    fetch(GOOGLE_SHEET_WEBAPP_URL, { method: 'POST', body: formData, mode: 'no-cors' });
 }
 
 function openModal(type) {
     const modal = document.getElementById("legalModal");
-    const title = document.getElementById("modalTitle");
-    const body = document.getElementById("modalBody");
     modal.style.display = "flex";
-    
-    if (type === 'privacy') {
-        title.textContent = "Privacy Policy";
-        body.textContent = "We safely securely process standard parameters required to estimate automotive depreciations.";
-    } else if (type === 'terms') {
-        title.textContent = "Terms of Service";
-        body.textContent = "Estimations compiled via CarValueAI are calculated from standardized industry averages.";
-    } else if (type === 'refund') {
-        title.textContent = "Refund Policy";
-        body.textContent = "Premium diagnostic service token processing fee transactions of ₹49 are processed instantly and non-refundable.";
-    } else if (type === 'contact') {
-        title.textContent = "Contact Us";
-        body.textContent = "For queries regarding our valuation, please send a message directly to our official customer desk via the integrated WhatsApp channel.";
-    } else if (type === 'rc_check') {
-        title.textContent = "RC Check Status";
-        body.textContent = "The live RC status verification module pipeline architecture is currently under active testing blocks and will release inside future updates soon.";
-    }
+    document.getElementById("modalTitle").textContent = type.toUpperCase();
+    document.getElementById("modalBody").textContent = "Automotive market research value validation pipeline layer.";
 }
-
-function closeModal() {
-    document.getElementById("legalModal").style.display = "none";
-}
+function closeModal() { document.getElementById("legalModal").style.display = "none"; }
 </script>
-
 </body>
 </html>
