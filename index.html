@@ -568,14 +568,15 @@ function showEvaluationResult() {
     
     let totalDepreciation = 0;
     
+    // Correct Depreciation standard logic setup
     if (carAge === 0) {
-        totalDepreciation = 0.15;
+        totalDepreciation = 0.15; // 2026 model
     } else if (carAge === 1) {
-        totalDepreciation = 0.25;
+        totalDepreciation = 0.25; // 2025 model
     } else if (carAge === 2) {
-        totalDepreciation = 0.33;
+        totalDepreciation = 0.33; // 2024 model
     } else if (carAge === 3) {
-        totalDepreciation = 0.42;
+        totalDepreciation = 0.42; // 2023 model
     } else {
         totalDepreciation = 0.42 + ((carAge - 3) * 0.07);
     }
@@ -605,7 +606,6 @@ function showEvaluationResult() {
     document.getElementById("resPriceVal").textContent = appState.finalPriceRange;
     document.getElementById("resultBox").style.display = "block";
     
-    // Send background details to sheet logger setup
     logLeadToSheets(displayBrand, displayModel, displayVariant, finalCarString);
 }
 
@@ -625,7 +625,7 @@ function openRazorpay() {
 
     var options = {
         "key": RAZORPAY_KEY_ID,
-        "amount": 4900, // ₹49.00 in paise
+        "amount": 4900, 
         "currency": "INR",
         "name": "CarValueAI.in",
         "description": "Detailed Valuation Report PDF",
@@ -683,7 +683,7 @@ function logLeadToSheets(b, m, v, fullString) {
     formData.append("calculated_range", appState.finalPriceRange);
 
     fetch(GOOGLE_SHEET_WEBAPP_URL, { method: 'POST', body: formData, mode: 'no-cors' })
-    .catch(error => console.log('Logger endpoint response handshake skipped.'));
+    .catch(error => console.log('Logger endpoint response skipped.'));
 }
 
 function openModal(type) {
@@ -695,16 +695,16 @@ function openModal(type) {
     
     if (type === 'privacy') {
         title.textContent = "Privacy Policy";
-        body.textContent = "We safely securely process standard parameters required to estimate automotive depreciations. No sensitive identity matrices are shared outside direct evaluation requirements.";
+        body.textContent = "We safely securely process standard parameters required to estimate automotive depreciations.";
     } else if (type === 'terms') {
         title.textContent = "Terms of Service";
-        body.textContent = "Estimations compiled via CarValueAI are calculated from standardized industry averages and data approximations. Actual offline evaluations inside specialized regional zones may differ.";
+        body.textContent = "Estimations compiled via CarValueAI are calculated from standardized industry averages.";
     } else if (type === 'refund') {
         title.textContent = "Refund Policy";
         body.textContent = "Premium diagnostic service token processing fee transactions of ₹49 are processed instantly and non-refundable.";
     } else if (type === 'contact') {
         title.textContent = "Contact Us";
-        body.textContent = "For queries regarding our valuation breakdown engine parameters, please send a message directly to our official customer desk via the integrated WhatsApp channel dashboard connection.";
+        body.textContent = "For queries regarding our valuation, please send a message directly to our official customer desk via the integrated WhatsApp channel.";
     } else if (type === 'rc_check') {
         title.textContent = "RC Check Status";
         body.textContent = "The live RC status verification module pipeline architecture is currently under active testing blocks and will release inside future updates soon.";
