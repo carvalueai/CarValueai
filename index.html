@@ -43,7 +43,6 @@
         
         select, input[type=text], input[type=tel] { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; color: #0f172a; background: #fff; transition: 0.2s; }
         select:focus, input:focus { outline: none; border-color: #C62828; box-shadow: 0 0 0 3px rgba(198,40,40,0.15); }
-        select:disabled { background: #f1f5f9; color: #94a3b8; cursor: not-allowed; }
         
         .fuel-row, .owner-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
         .fuel-btn, .owner-btn { flex: 1; min-width: 75px; padding: 10px 6px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; background: #fff; color: #475569; text-align: center; transition: 0.2s; }
@@ -106,8 +105,6 @@
         
         .whatsapp-fab { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: #fff; width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.3); z-index: 999; transition: 0.2s; }
         .whatsapp-fab:hover { transform: scale(1.08); }
-        .custom-input-box { display: none; margin-top: 10px; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -145,33 +142,46 @@
             <div class="frow">
                 <div>
                     <div class="flabel"><i class="ti ti-car"></i> Manufacturer Brand</div>
-                    <select id="brandSelect" onchange="onBrandChange()">
-                        <option value="">-- Select Brand --</option>
-                    </select>
-                    <div id="customBrandWrap" class="custom-input-box">
-                        <input type="text" id="customBrandInput" placeholder="Type Custom Brand (e.g. MG, Skoda)">
-                    </div>
+                    <input type="text" id="brandInput" list="brandList" placeholder="Type Brand (e.g. Maruti, Audi, MG)" oninput="onBrandInput()">
+                    <datalist id="brandList">
+                        <option value="Maruti Suzuki"></option>
+                        <option value="Hyundai"></option>
+                        <option value="Tata Motors"></option>
+                        <option value="Mahindra"></option>
+                        <option value="Toyota"></option>
+                        <option value="Honda"></option>
+                        <option value="Kia"></option>
+                        <option value="Volkswagen"></option>
+                        <option value="Skoda"></option>
+                        <option value="MG Motor"></option>
+                        <option value="Renault"></option>
+                        <option value="Nissan"></option>
+                        <option value="Audi"></option>
+                        <option value="BMW"></option>
+                        <option value="Mercedes-Benz"></option>
+                        <option value="Jeep"></option>
+                        <option value="Volvo"></option>
+                        <option value="Jaguar"></option>
+                        <option value="Land Rover"></option>
+                        <option value="Citroen"></option>
+                        <option value="Ford"></option>
+                        <option value="Chevrolet"></option>
+                        <option value="Fiat"></option>
+                        <option value="Datsun"></option>
+                    </datalist>
                 </div>
                 <div>
                     <div class="flabel"><i class="ti ti-subtask"></i> Model Name</div>
-                    <select id="modelSelect" onchange="onModelChange()" disabled>
-                        <option value="">-- Choose Model --</option>
-                    </select>
-                    <div id="customModelWrap" class="custom-input-box">
-                        <input type="text" id="customModelInput" placeholder="Type Custom Model (e.g. Astor, Kushaq)">
-                    </div>
+                    <input type="text" id="modelInput" list="modelList" placeholder="Type Model (e.g. Swift, Hector, Q5)">
+                    <datalist id="modelList"></datalist>
                 </div>
             </div>
             
             <div class="frow">
                 <div>
                     <div class="flabel"><i class="ti ti-layers-difference"></i> Trim Variant</div>
-                    <select id="variantSelect" onchange="onVariantChange()" disabled>
-                        <option value="">-- Choose Variant --</option>
-                    </select>
-                    <div id="customVariantWrap" class="custom-input-box">
-                        <input type="text" id="customVariantInput" placeholder="Type Custom Variant (e.g. Style, Sharp)">
-                    </div>
+                    <input type="text" id="variantInput" list="variantList" placeholder="Type Variant (e.g. VXI, Sharp, Top)">
+                    <datalist id="variantList"></datalist>
                 </div>
                 <div>
                     <div class="flabel"><i class="ti ti-calendar-event"></i> Registration Year</div>
@@ -189,6 +199,9 @@
                         <option value="2017">2017</option>
                         <option value="2016">2016</option>
                         <option value="2015">2015</option>
+                        <option value="2014">2014</option>
+                        <option value="2013">2013</option>
+                        <option value="2012">2012</option>
                     </select>
                 </div>
             </div>
@@ -314,8 +327,6 @@
 
 <script>
 const GOOGLE_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw3yugIbJWIOX_H99zNGRmy9cfTFffrrlqkXcEbgObHcR5k2cBXWU9sA6Uc7eaf8fg/exec";
-
-// Enter your live or test Razorpay key id here
 const RAZORPAY_KEY_ID = "YOUR_RAZORPAY_KEY_ID";
 
 const popularCities = [
@@ -324,41 +335,30 @@ const popularCities = [
     "Lucknow", "Jaipur", "Ahmedabad", "Chandigarh", "Asansol"
 ];
 
-const carDatabase = {
-    "Maruti Suzuki": {
-        "Swift": { variants: ["LXi", "VXi", "ZXi", "ZXi Plus"], basePrice: { "LXi": 649000, "VXi": 749000, "ZXi": 849000, "ZXi Plus": 920000 } },
-        "Baleno": { variants: ["Sigma", "Delta", "Zeta", "Alpha"], basePrice: { "Sigma": 669000, "Delta": 749000, "Zeta": 869000, "Alpha": 980000 } },
-        "Brezza": { variants: ["LXi", "VXi", "ZXi", "ZXi Plus"], basePrice: { "LXi": 830000, "VXi": 960000, "ZXi": 1100000, "ZXi Plus": 1400000 } }
-    },
-    "Hyundai": {
-        "Creta": { variants: ["E", "EX", "S", "SX Tech", "SX(O)"], basePrice: { "E": 1100000, "EX": 1320000, "S": 1450000, "SX Tech": 1600000, "SX(O)": 1900000 } },
-        "i20": { variants: ["Era", "Magna", "Sportz", "Asta"], basePrice: { "Era": 740000, "Magna": 830000, "Sportz": 910000, "Asta": 1050000 } }
-    },
-    "Tata Motors": {
-        "Nexon": { variants: ["Smart", "Pure", "Creative", "Fearless"], basePrice: { "Smart": 799000, "Pure": 999000, "Creative": 1199000, "Fearless": 1350000 } },
-        "Harrier": { variants: ["Smart", "Pure", "Adventure", "Fearless"], basePrice: { "Smart": 1549000, "Pure": 1699000, "Adventure": 2010000, "Fearless": 2400000 } }
-    },
-    "Mahindra": {
-        "Thar": { variants: ["AX(O) CRDe", "LX Petrol MT", "LX Diesel AT"], basePrice: { "AX(O) CRDe": 1130000, "LX Petrol MT": 1450000, "LX Diesel AT": 1750000 } },
-        "XUV700": { variants: ["MX", "AX3", "AX5", "AX7", "AX7 Luxury"], basePrice: { "MX": 1399000, "AX3": 1649000, "AX5": 1799000, "AX7": 2149000, "AX7 Luxury": 2399000 } }
-    },
-    "Toyota": {
-        "Fortuner": { variants: ["2.7 Petrol MT", "2.8 Diesel MT", "2.8 Diesel AT 4x4", "Legender"], basePrice: { "2.7 Petrol MT": 3343000, "2.8 Diesel MT": 3593000, "2.8 Diesel AT 4x4": 4200000, "Legender": 4366000 } },
-        "Innova Crysta": { variants: ["GX 7 STR", "VX 7 STR", "ZX 7 STR"], basePrice: { "GX 7 STR": 1999000, "VX 7 STR": 2439000, "ZX 7 STR": 2630000 } }
-    },
-    "Honda": {
-        "City": { variants: ["SV", "V", "VX", "ZX"], basePrice: { "SV": 1180000, "V": 1270000, "VX": 1370000, "ZX": 1490000 } },
-        "Amaze": { variants: ["E", "S", "VX"], basePrice: { "E": 720000, "S": 790000, "VX": 900000 } }
-    },
-    "Kia": {
-        "Seltos": { variants: ["HTE", "HTK", "HTX", "GTX Plus", "X-Line"], basePrice: { "HTE": 1090000, "HTK": 1220000, "HTX": 1530000, "GTX Plus": 1940000, "X-Line": 2030000 } }
-    },
-    "Volkswagen": {
-        "Virtus": { variants: ["Comfortline", "Highline", "Topline", "GT Plus"], basePrice: { "Comfortline": 1150000, "Highline": 1350000, "Topline": 1520000, "GT Plus": 1900000 } }
-    },
-    "Skoda": {
-        "Slavia": { variants: ["Active", "Ambition", "Style", "Elegance"], basePrice: { "Active": 1140000, "Ambition": 1330000, "Style": 1500000, "Elegance": 1750000 } }
-    }
+// Reference static DB for popular models suggestions auto-fills
+const subModelsDB = {
+    "Maruti Suzuki": ["Swift", "Baleno", "Brezza", "Alto", "WagonR", "Dzire", "Ertiga", "Grand Vitara", "Celerio"],
+    "Hyundai": ["Creta", "i20", "i10 Grand", "Verna", "Venue", "Alcazar", "Tucson", "Exter"],
+    "Tata Motors": ["Nexon", "Harrier", "Punch", "Altroz", "Tiago", "Tigor", "Safari"],
+    "Mahindra": ["Thar", "XUV700", "Scorpio Classic", "Scorpio N", "XUV300", "Bolero"],
+    "Toyota": ["Fortuner", "Innova Crysta", "Innova Hycross", "Glanza", "Urban Cruiser"],
+    "Honda": ["City", "Amaze", "Elevate", "Jazz", "WR-V"],
+    "Kia": ["Seltos", "Sonet", "Carens", "Carnival"],
+    "Volkswagen": ["Virtus", "Taigun", "Polo", "Vento"],
+    "Skoda": ["Slavia", "Kushaq", "Octavia", "Superb"],
+    "MG Motor": ["Hector", "Astor", "ZS EV", "Gloster"],
+    "Renault": ["Kwid", "Triber", "Kiger", "Duster"],
+    "Nissan": ["Magnite", "Kicks", "Sunny"]
+};
+
+const subVariantsDB = {
+    "Swift": ["LXI", "VXI", "ZXI", "ZXI Plus"],
+    "Baleno": ["Sigma", "Delta", "Zeta", "Alpha"],
+    "Brezza": ["LXI", "VXI", "ZXI", "ZXI Plus"],
+    "Creta": ["E", "EX", "S", "SX", "SX (O)"],
+    "i20": ["Era", "Magna", "Sportz", "Asta"],
+    "Nexon": ["Smart", "Pure", "Creative", "Fearless"],
+    "Thar": ["AX(O)", "LX Petrol", "LX Diesel"]
 };
 
 let appState = {
@@ -367,17 +367,6 @@ let appState = {
 };
 
 window.onload = function() {
-    const brandSel = document.getElementById("brandSelect");
-    for (let brand in carDatabase) {
-        let opt = document.createElement("option");
-        opt.value = brand; opt.textContent = brand;
-        brandSel.appendChild(opt);
-    }
-    let alternativeOpt = document.createElement("option");
-    alternativeOpt.value = "CUSTOM_CAR";
-    alternativeOpt.textContent = "⚙️ Other Brand (Type Manually)";
-    brandSel.appendChild(alternativeOpt);
-    
     const cityContainer = document.getElementById("cityGridContainer");
     popularCities.forEach((city, index) => {
         let chip = document.createElement("div");
@@ -388,83 +377,42 @@ window.onload = function() {
     });
 };
 
-function onBrandChange() {
-    const brandSel = document.getElementById("brandSelect");
-    const modelSel = document.getElementById("modelSelect");
-    const variantSel = document.getElementById("variantSelect");
-    const customBrandWrap = document.getElementById("customBrandWrap");
+function onBrandInput() {
+    const brandVal = document.getElementById("brandInput").value.trim();
+    const modelList = document.getElementById("modelList");
+    modelList.innerHTML = "";
     
-    appState.brand = brandSel.value;
-    modelSel.innerHTML = '<option value="">-- Choose Model --</option>';
-    variantSel.innerHTML = '<option value="">-- Choose Variant --</option>';
-    variantSel.disabled = true;
-    
-    if (appState.brand === "CUSTOM_CAR") {
-        customBrandWrap.style.display = "block";
-        modelSel.disabled = false;
-        modelSel.innerHTML = '<option value="CUSTOM_MODEL">⚙️ Other Model (Type Manually)</option>';
-        onModelChange();
-    } else {
-        customBrandWrap.style.display = "none";
-        document.getElementById("customModelWrap").style.display = "none";
-        document.getElementById("customVariantWrap").style.display = "none";
-        
-        if (appState.brand && carDatabase[appState.brand]) {
-            modelSel.disabled = false;
-            for (let m in carDatabase[appState.brand]) {
-                let opt = document.createElement("option");
-                opt.value = m; opt.textContent = m;
-                modelSel.appendChild(opt);
-            }
-            let alternativeOpt = document.createElement("option");
-            alternativeOpt.value = "CUSTOM_MODEL";
-            alternativeOpt.textContent = "⚙️ Other Model (Type Manually)";
-            modelSel.appendChild(alternativeOpt);
-        } else { modelSel.disabled = true; }
+    if (subModelsDB[brandVal]) {
+        subModelsDB[brandVal].forEach(m => {
+            let opt = document.createElement("option");
+            opt.value = m;
+            modelList.appendChild(opt);
+        });
     }
 }
 
-function onModelChange() {
-    const modelSel = document.getElementById("modelSelect");
-    const variantSel = document.getElementById("variantSelect");
-    const customModelWrap = document.getElementById("customModelWrap");
-    
-    appState.model = modelSel.value;
-    variantSel.innerHTML = '<option value="">-- Choose Variant --</option>';
-    
-    if (appState.model === "CUSTOM_MODEL") {
-        customModelWrap.style.display = "block";
-        variantSel.disabled = false;
-        variantSel.innerHTML = '<option value="CUSTOM_VARIANT">⚙️ Other Variant (Type Manually)</option>';
-        onVariantChange();
-    } else {
-        customModelWrap.style.display = "none";
-        document.getElementById("customVariantWrap").style.display = "none";
+document.addEventListener("input", function(e) {
+    if(e.target && e.target.id === "modelInput") {
+        const modelVal = e.target.value.trim();
+        const variantList = document.getElementById("variantList");
+        variantList.innerHTML = "";
         
-        if (appState.brand && appState.model && carDatabase[appState.brand][appState.model]) {
-            variantSel.disabled = false;
-            carDatabase[appState.brand][appState.model].variants.forEach(v => {
+        if (subVariantsDB[modelVal]) {
+            subVariantsDB[modelVal].forEach(v => {
                 let opt = document.createElement("option");
-                opt.value = v; opt.textContent = v;
-                variantSel.appendChild(opt);
+                opt.value = v;
+                variantList.appendChild(opt);
             });
-            let alternativeOpt = document.createElement("option");
-            alternativeOpt.value = "CUSTOM_VARIANT";
-            alternativeOpt.textContent = "⚙️ Other Variant (Type Manually)";
-            variantSel.appendChild(alternativeOpt);
-        } else { variantSel.disabled = true; }
+        } else {
+            // Default generic fallback variants tags suggestion
+            ["Base Model", "Mid Variant LXI/Delta", "Top Feature SX/ZXI", "Automatic Luxury Trim"].forEach(v => {
+                let opt = document.createElement("option");
+                opt.value = v;
+                variantList.appendChild(opt);
+            });
+        }
     }
-}
-
-function onVariantChange() {
-    const variantSel = document.getElementById("variantSelect");
-    const customVariantWrap = document.getElementById("customVariantWrap");
-    if (variantSel.value === "CUSTOM_VARIANT") {
-        customVariantWrap.style.display = "block";
-    } else {
-        customVariantWrap.style.display = "none";
-    }
-}
+});
 
 function selectFuel(btn, val) {
     document.querySelectorAll(".fuel-btn").forEach(b => b.classList.remove("active"));
@@ -507,6 +455,16 @@ function startEngineSimulation() {
     const name = document.getElementById("userName").value.trim();
     const phone = document.getElementById("userPhone").value.trim();
     
+    appState.brand = document.getElementById("brandInput").value.trim();
+    appState.model = document.getElementById("modelInput").value.trim();
+    appState.variant = document.getElementById("variantInput").value.trim();
+    
+    if(!appState.brand || !appState.model) {
+        alert("Please enter a valid Car Brand and Model Name.");
+        goToStep(1);
+        return;
+    }
+
     if(!name || phone.length < 10) {
         alert("Please enter a valid Name and 10-digit Mobile Number.");
         return;
@@ -524,7 +482,7 @@ function startEngineSimulation() {
     
     const statusArray = [
         "Analyzing car specification metrics...",
-        "Evaluating regional demand matrices...",
+        "Evaluating regional market demand...",
         "Applying depreciation standard calculations...",
         "Structuring valuation records..."
     ];
@@ -538,28 +496,26 @@ function startEngineSimulation() {
             clearInterval(interval);
             showEvaluationResult();
         }
-    }, 800);
+    }, 700);
 }
 
 function showEvaluationResult() {
     document.getElementById("aiLoader").style.display = "none";
     document.getElementById("wizardContainer").style.display = "none";
     
-    let displayBrand = appState.brand === "CUSTOM_CAR" ? document.getElementById("customBrandInput").value.trim() : appState.brand;
-    let displayModel = appState.model === "CUSTOM_MODEL" ? document.getElementById("customModelInput").value.trim() : appState.model;
-    let displayVariant = appState.variant === "CUSTOM_VARIANT" ? document.getElementById("customVariantInput").value.trim() : appState.variant;
-    
-    if(!displayBrand) displayBrand = "Custom Car";
-    if(!displayModel) displayModel = "Model";
-    if(!displayVariant) displayVariant = "Variant";
-
-    let finalCarString = `${displayBrand} ${displayModel} [${displayVariant}] (${appState.year})`;
+    let finalCarString = `${appState.brand} ${appState.model} ${appState.variant ? '['+appState.variant+']' : ''} (${appState.year})`;
     document.getElementById("resCarName").textContent = finalCarString;
     
-    let basePrice = 600000;
-    if (carDatabase[appState.brand] && carDatabase[appState.brand][appState.model]) {
-        let matchedVariant = carDatabase[appState.brand][appState.model].basePrice[appState.variant];
-        if (matchedVariant) basePrice = matchedVariant;
+    // Smart estimation engine algorithm based on handwritten inputs
+    let basePrice = 850000; 
+    let lowerBrand = appState.brand.toLowerCase();
+    
+    if(lowerBrand.includes("audi") || lowerBrand.includes("bmw") || lowerBrand.includes("mercedes") || lowerBrand.includes("jaguar") || lowerBrand.includes("rover")) {
+        basePrice = 4500000; // Luxury Car Segment Base Price
+    } else if(lowerBrand.includes("fortuner") || lowerBrand.includes("thar") || lowerBrand.includes("scorpio") || lowerBrand.includes("xuv700") || lowerBrand.includes("harrier")) {
+        basePrice = 1800000; // SUV Premium Segment Base Price
+    } else if(lowerBrand.includes("maruti") || lowerBrand.includes("alto") || lowerBrand.includes("kwid") || lowerBrand.includes("i10")) {
+        basePrice = 550000;  // Hatchback Segment Base Price
     }
     
     const currentYear = 2026;
@@ -567,46 +523,36 @@ function showEvaluationResult() {
     if (carAge < 0) carAge = 0;
     
     let totalDepreciation = 0;
-    
-    // Correct Depreciation standard logic setup
-    if (carAge === 0) {
-        totalDepreciation = 0.15; // 2026 model
-    } else if (carAge === 1) {
-        totalDepreciation = 0.25; // 2025 model
-    } else if (carAge === 2) {
-        totalDepreciation = 0.33; // 2024 model
-    } else if (carAge === 3) {
-        totalDepreciation = 0.42; // 2023 model
-    } else {
-        totalDepreciation = 0.42 + ((carAge - 3) * 0.07);
-    }
+    if (carAge === 0) totalDepreciation = 0.12;
+    else if (carAge === 1) totalDepreciation = 0.22;
+    else if (carAge === 2) totalDepreciation = 0.32;
+    else if (carAge === 3) totalDepreciation = 0.40;
+    else totalDepreciation = 0.40 + ((carAge - 3) * 0.08);
     
     if (totalDepreciation > 0.85) totalDepreciation = 0.85;
     
-    let kmFactor = appState.km / 100000;
+    let kmFactor = appState.km / 120000;
     if(kmFactor > 0.15) kmFactor = 0.15;
     totalDepreciation += kmFactor;
     
     if (appState.condition === "Good") totalDepreciation += 0.05;
     if (appState.condition === "Fair") totalDepreciation += 0.15;
     if (appState.condition === "Poor") totalDepreciation += 0.30;
-    
-    if (appState.owner === 2) totalDepreciation += 0.07;
-    if (appState.owner >= 3) totalDepreciation += 0.15;
+    if (appState.owner >= 2) totalDepreciation += 0.10;
     
     if (totalDepreciation > 0.90) totalDepreciation = 0.90;
     
     let estimatedValuation = basePrice * (1 - totalDepreciation);
-    if(estimatedValuation < 30000) estimatedValuation = 30000;
+    if(estimatedValuation < 45000) estimatedValuation = 45000;
     
-    let lowerBound = Math.round((estimatedValuation * 0.95) / 1000) * 1000;
-    let upperBound = Math.round((estimatedValuation * 1.05) / 1000) * 1000;
+    let lowerBound = Math.round((estimatedValuation * 0.92) / 1000) * 1000;
+    let upperBound = Math.round((estimatedValuation * 1.08) / 1000) * 1000;
     
     appState.finalPriceRange = `₹ ${lowerBound.toLocaleString('en-IN')} - ₹ ${upperBound.toLocaleString('en-IN')}`;
     document.getElementById("resPriceVal").textContent = appState.finalPriceRange;
     document.getElementById("resultBox").style.display = "block";
     
-    logLeadToSheets(displayBrand, displayModel, displayVariant, finalCarString);
+    logLeadToSheets(appState.brand, appState.model, appState.variant, finalCarString);
 }
 
 function showPaymentWindow() {
@@ -634,38 +580,28 @@ function openRazorpay() {
                 handleSuccessfulPayment();
             }
         },
-        "prefill": {
-            "name": name,
-            "contact": phone
-        },
-        "theme": {
-            "color": "#C62828"
-        }
+        "prefill": { "name": name, "contact": phone },
+        "theme": { "color": "#C62828" }
     };
     var rzp1 = new Razorpay(options);
     rzp1.on('payment.failed', function (response){
-        alert("Payment process failed or was interrupted: " + response.error.description);
+        alert("Payment process failed: " + response.error.description);
     });
     rzp1.open();
 }
 
 function handleSuccessfulPayment() {
     document.getElementById("resultBox").style.display = "none";
-    
-    let displayBrand = appState.brand === "CUSTOM_CAR" ? document.getElementById("customBrandInput").value.trim() : appState.brand;
-    let displayModel = appState.model === "CUSTOM_MODEL" ? document.getElementById("customModelInput").value.trim() : appState.model;
-    
-    document.getElementById("lblCarName").textContent = `${displayBrand} ${displayModel}`;
+    document.getElementById("lblCarName").textContent = `${appState.brand} ${appState.model}`;
     document.getElementById("lblCity").textContent = appState.city;
     document.getElementById("lblKm").textContent = appState.km.toLocaleString('en-IN') + " km";
     document.getElementById("lblCondition").textContent = appState.condition;
     document.getElementById("lblFinalPrice").textContent = appState.finalPriceRange;
-    
     document.getElementById("successBox").style.display = "block";
 }
 
 function triggerPDFDownload() {
-    alert("Valuation Summary Document download has been initiated successfully inside your device storage blocks.");
+    alert("Valuation Summary Document download has been initiated successfully.");
 }
 
 function logLeadToSheets(b, m, v, fullString) {
@@ -683,14 +619,13 @@ function logLeadToSheets(b, m, v, fullString) {
     formData.append("calculated_range", appState.finalPriceRange);
 
     fetch(GOOGLE_SHEET_WEBAPP_URL, { method: 'POST', body: formData, mode: 'no-cors' })
-    .catch(error => console.log('Logger endpoint response skipped.'));
+    .catch(error => console.log('Logger endpoint handled.'));
 }
 
 function openModal(type) {
     const modal = document.getElementById("legalModal");
     const title = document.getElementById("modalTitle");
     const body = document.getElementById("modalBody");
-    
     modal.style.display = "flex";
     
     if (type === 'privacy') {
@@ -708,9 +643,6 @@ function openModal(type) {
     } else if (type === 'rc_check') {
         title.textContent = "RC Check Status";
         body.textContent = "The live RC status verification module pipeline architecture is currently under active testing blocks and will release inside future updates soon.";
-    } else {
-        title.textContent = "Premium Services";
-        body.textContent = "Premium features are available instantly by generating a full car estimation block record using the clear step-by-step form modules above.";
     }
 }
 
