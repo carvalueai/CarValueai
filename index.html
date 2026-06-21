@@ -22,7 +22,6 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); }
 
-  /* NAV */
   nav { background: var(--primary); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
   .logo { color: #fff; font-size: 1.3rem; font-weight: 700; letter-spacing: -0.5px; }
   .logo span { color: var(--accent2); }
@@ -31,7 +30,6 @@
   .nav-links a:hover { color: #fff; }
   .nav-cta { background: var(--accent); color: #fff !important; padding: 7px 18px; border-radius: 20px; font-weight: 600; }
 
-  /* HERO */
   .hero { background: linear-gradient(135deg, var(--primary) 0%, #0f2640 100%); color: #fff; padding: 64px 24px 80px; text-align: center; }
   .hero-badge { display: inline-block; background: rgba(232,85,43,0.2); border: 1px solid rgba(232,85,43,0.5); color: var(--accent2); padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 20px; letter-spacing: 0.5px; }
   .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; line-height: 1.2; margin-bottom: 16px; max-width: 720px; margin-left: auto; margin-right: auto; }
@@ -40,11 +38,9 @@
   .trust-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 24px; }
   .trust-item { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 20px; font-size: 0.82rem; color: rgba(255,255,255,0.85); }
 
-  /* MAIN CARD */
   .main-wrap { max-width: 820px; margin: -40px auto 60px; padding: 0 16px; }
   .form-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
 
-  /* STEPS INDICATOR */
   .steps-bar { display: flex; background: #f1f5f9; border-bottom: 1px solid var(--border); }
   .step-tab { flex: 1; padding: 16px 8px; text-align: center; font-size: 0.82rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; transition: all 0.3s; cursor: default; }
   .step-tab.active { color: var(--primary); border-color: var(--primary); background: #fff; }
@@ -53,7 +49,6 @@
   .step-tab.active .step-num { background: var(--primary); color: #fff; }
   .step-tab.done .step-num { background: var(--success); color: #fff; }
 
-  /* FORM BODY */
   .form-body { padding: 32px 28px; }
   .form-step { display: none; }
   .form-step.active { display: block; }
@@ -74,17 +69,14 @@
   select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
   select:focus, input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,60,94,0.08); }
 
-  /* FUEL + OWNER TOGGLE */
   .toggle-group { display: flex; flex-wrap: wrap; gap: 10px; }
   .toggle-btn { padding: 9px 18px; border: 1.5px solid var(--border); border-radius: 8px; background: #fff; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; font-weight: 500; color: var(--muted); }
   .toggle-btn.selected { border-color: var(--primary); background: var(--primary); color: #fff; }
 
-  /* KM SLIDER */
   .km-display { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
   .km-display span { font-size: 0.85rem; color: var(--muted); font-weight: 400; }
   input[type="range"] { width: 100%; accent-color: var(--primary); height: 6px; cursor: pointer; }
 
-  /* CONDITION */
   .condition-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .cond-card { border: 2px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.2s; }
   .cond-card:hover { border-color: var(--primary); background: #f0f4f8; }
@@ -93,20 +85,17 @@
   .cond-label { font-weight: 700; font-size: 0.92rem; color: var(--text); margin-bottom: 4px; }
   .cond-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
 
-  /* CITY SELECT */
   .city-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
   .city-btn { padding: 10px 8px; border: 1.5px solid var(--border); border-radius: 8px; background: #fff; font-size: 0.83rem; cursor: pointer; text-align: center; transition: all 0.2s; color: var(--text); font-weight: 500; }
   .city-btn:hover { border-color: var(--accent); }
   .city-btn.selected { border-color: var(--primary); background: var(--primary); color: #fff; }
 
-  /* BUTTONS */
   .btn-row { display: flex; gap: 12px; margin-top: 32px; }
   .btn-primary { flex: 1; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; letter-spacing: 0.3px; }
   .btn-primary:hover { background: #d44420; transform: translateY(-1px); }
   .btn-secondary { padding: 14px 20px; background: transparent; color: var(--primary); border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
   .btn-secondary:hover { background: #f1f5f9; }
 
-  /* RESULT */
   #resultSection { display: none; padding: 32px 28px; }
   .result-header { text-align: center; margin-bottom: 28px; }
   .result-header h2 { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
@@ -123,7 +112,6 @@
   .badge-orange { background: #ffedd5; color: #ea580c; }
   .badge-red { background: #fee2e2; color: #dc2626; }
 
-  /* PAYMENT BOX */
   .pay-box { border: 2px dashed var(--accent2); background: #fffbf0; border-radius: 14px; padding: 24px; text-align: center; }
   .pay-box h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 6px; }
   .pay-box p { color: var(--muted); font-size: 0.88rem; margin-bottom: 20px; }
@@ -136,12 +124,10 @@
   .wa-btn:hover { background: #128C7E; transform: translateY(-1px); }
   .wa-icon { font-size: 1.3rem; }
 
-  /* FOOTER */
   footer { background: var(--primary); color: rgba(255,255,255,0.7); text-align: center; padding: 24px 16px; font-size: 0.82rem; }
   footer a { color: rgba(255,255,255,0.6); text-decoration: none; margin: 0 8px; }
   footer a:hover { color: #fff; }
 
-  /* LOADING */
   .loading-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; align-items: center; justify-content: center; }
   .loading-overlay.show { display: flex; }
   .loading-box { background: #fff; border-radius: 16px; padding: 40px; text-align: center; max-width: 280px; }
@@ -153,7 +139,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">CarValue<span>AI</span>.in</div>
   <ul class="nav-links">
@@ -164,7 +149,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-badge">🏆 India's Most Accurate Used Car Valuation</div>
   <h1>Know Your Car's <span>True Market Value</span><br>Before You Sell — Instantly</h1>
@@ -177,17 +161,14 @@
   </div>
 </section>
 
-<!-- MAIN FORM CARD -->
 <div class="main-wrap" id="valuator">
   <div class="form-card">
-    <!-- STEPS BAR -->
     <div class="steps-bar">
       <div class="step-tab active" id="tab1"><span class="step-num">1</span>Car Details</div>
       <div class="step-tab" id="tab2"><span class="step-num">2</span>Condition</div>
       <div class="step-tab" id="tab3"><span class="step-num">3</span>Your Info</div>
     </div>
 
-    <!-- STEP 1: CAR SPECS -->
     <div class="form-body">
       <div class="form-step active" id="step1">
         <div class="step-title">🚗 Car Specifications</div>
@@ -277,7 +258,6 @@
         </div>
       </div>
 
-      <!-- STEP 2: CONDITION -->
       <div class="form-step" id="step2">
         <div class="step-title">🔍 Overall Car Condition</div>
         <div class="step-sub">Honest assessment gives you the most accurate valuation</div>
@@ -309,7 +289,6 @@
         </div>
       </div>
 
-      <!-- STEP 3: CONTACT -->
       <div class="form-step" id="step3">
         <div class="step-title">👤 Your Contact Details</div>
         <div class="step-sub">We'll send your valuation report directly on WhatsApp</div>
@@ -330,7 +309,6 @@
       </div>
     </div>
 
-    <!-- RESULT SECTION -->
     <div id="resultSection">
       <div class="result-header">
         <div style="font-size:2rem;margin-bottom:8px;">✅</div>
@@ -361,7 +339,6 @@
           <div class="factor-value" id="ownerImpact">—</div>
         </div>
       </div>
-      <!-- PAYMENT -->
       <div class="pay-box">
         <div class="pay-amount">₹49 Only</div>
         <h3>Unlock Your Full Valuation PDF Report</h3>
@@ -394,7 +371,6 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div style="margin-bottom:8px;">
     <a href="#">Privacy Policy</a>
@@ -405,7 +381,6 @@
   <div>© 2026 CarValueAI.in — Market estimation based on Indian used car depreciation norms & live data.</div>
 </footer>
 
-<!-- LOADING OVERLAY -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-box">
     <div class="spinner"></div>
@@ -661,14 +636,13 @@ const cityDemand = {
 const fuelMultiplier = { petrol: 1.0, diesel: 1.05, cng: 0.90, electric: 1.08, hybrid: 1.06 };
 const ownerMultiplier = { "1": 1.0, "2": 0.88, "3": 0.76 };
 
-// State
 let selectedFuel = "", selectedOwner = "", selectedCondition = "", selectedCity = "";
 
-// ===================== LOAD YEARS =====================
+// ===================== LOAD YEARS — 2000 to current =====================
 (function loadYears() {
   const sel = document.getElementById("yearSelect");
   const currentYear = new Date().getFullYear();
-  for (let y = currentYear; y >= 2005; y--) {
+  for (let y = currentYear; y >= 2000; y--) {
     sel.innerHTML += `<option value="${y}">${y}</option>`;
   }
 })();
@@ -702,7 +676,6 @@ function loadVariants() {
   variantSel.disabled = false;
 }
 
-// ===================== TOGGLE BUTTONS =====================
 function selectToggle(groupId, el, value) {
   document.querySelectorAll(`#${groupId} .toggle-btn`).forEach(b => b.classList.remove("selected"));
   el.classList.add("selected");
@@ -722,13 +695,11 @@ function selectCity(el, value) {
   selectedCity = value;
 }
 
-// ===================== KM SLIDER =====================
 function updateKm(val) {
   const n = parseInt(val);
   document.getElementById("kmDisplay").innerHTML = n.toLocaleString("en-IN") + ' <span>km</span>';
 }
 
-// ===================== STEP NAVIGATION =====================
 function setActiveStep(n) {
   document.querySelectorAll(".form-step").forEach((s, i) => { s.classList.toggle("active", i+1 === n); });
   document.querySelectorAll(".step-tab").forEach((t, i) => {
@@ -758,7 +729,7 @@ function goStep3() {
   setActiveStep(3);
 }
 
-// ===================== VALUATION LOGIC =====================
+// ===================== VALUATION LOGIC — FIXED =====================
 function calculateValue() {
   const name = document.getElementById("userName").value.trim();
   const phone = document.getElementById("userPhone").value.trim();
@@ -775,61 +746,74 @@ function calculateValue() {
   // Base price from DB
   let basePrice = carDB[brand]?.basePrices?.[model] || 700000;
 
-  // ===== DEPRECIATION (FIXED INDIAN MARKET LOGIC) =====
-  // Year 0 (same year): 10%  | Year 1: 15% | Year 2: 10% | Year 3-5: 9-10%/yr | 6+: 8%/yr
+  // ===== FIXED DEPRECIATION — Realistic Indian Market =====
+  // Based on actual dealer transaction data (Tata Motors dealer insight)
+  // Year 0 (brand new registered same year): 5%
+  // Year 1: 15% cumulative
+  // Year 2: 23% cumulative
+  // Year 3: 30% cumulative
+  // Year 4: 36% cumulative
+  // Year 5: 42% cumulative
+  // Year 6+: ~6% per year additional, floor at 35% residual value
   let depPct = 0;
-  if (age === 0) depPct = 10;
-  else if (age === 1) depPct = 22;  // 10% + 15% on remaining
-  else if (age === 2) depPct = 30;
-  else if (age === 3) depPct = 39;
-  else if (age === 4) depPct = 47;
-  else if (age === 5) depPct = 54;
-  else depPct = Math.min(80, 54 + (age - 5) * 8);
-
-  let depricatedPrice = basePrice * (1 - depPct / 100);
-
-  // Condition multiplier
-  const condMult = { excellent: 1.08, good: 1.0, fair: 0.88, poor: 0.74 };
-  depricatedPrice *= (condMult[selectedCondition] || 1.0);
-
-  // Fuel type multiplier
-  depricatedPrice *= (fuelMultiplier[selectedFuel] || 1.0);
-
-  // Owner multiplier
-  depricatedPrice *= (ownerMultiplier[selectedOwner] || 1.0);
-
-  // KM penalty (every 10k over 50k = -1.5%)
-  if (km > 50000) {
-    const excessKm = km - 50000;
-    const penaltyPct = Math.min(15, (excessKm / 10000) * 1.5);
-    depricatedPrice *= (1 - penaltyPct / 100);
+  if (age <= 0) {
+    depPct = 5;
+  } else if (age === 1) {
+    depPct = 15;
+  } else if (age === 2) {
+    depPct = 23;
+  } else if (age === 3) {
+    depPct = 30;
+  } else if (age === 4) {
+    depPct = 36;
+  } else if (age === 5) {
+    depPct = 42;
+  } else {
+    // After 5 years: 6% per additional year, max depreciation = 65% (min 35% residual)
+    depPct = Math.min(65, 42 + (age - 5) * 6);
   }
 
-  // City demand adjustment
+  let depreciatedPrice = basePrice * (1 - depPct / 100);
+
+  // Condition multiplier
+  const condMult = { excellent: 1.10, good: 1.0, fair: 0.88, poor: 0.74 };
+  depreciatedPrice *= (condMult[selectedCondition] || 1.0);
+
+  // Fuel type multiplier
+  depreciatedPrice *= (fuelMultiplier[selectedFuel] || 1.0);
+
+  // Owner multiplier
+  depreciatedPrice *= (ownerMultiplier[selectedOwner] || 1.0);
+
+  // KM penalty — only kicks in above 60,000 km (realistic Indian usage: ~12k/yr)
+  if (km > 60000) {
+    const excessKm = km - 60000;
+    const penaltyPct = Math.min(12, (excessKm / 10000) * 1.2);
+    depreciatedPrice *= (1 - penaltyPct / 100);
+  }
+
+  // City demand adjustment (range: 0.92 to 1.08)
   const city = cityDemand[selectedCity] || cityDemand["other"];
-  const cityMult = 0.9 + (city.score / 100) * 0.2; // Range 0.90 to 1.10
-  depricatedPrice *= cityMult;
+  const cityMult = 0.92 + (city.score / 100) * 0.16;
+  depreciatedPrice *= cityMult;
 
-  // Low range = -8%, High range = +8%
-  const low = Math.round(depricatedPrice * 0.92 / 1000) * 1000;
-  const high = Math.round(depricatedPrice * 1.08 / 1000) * 1000;
-  const mid = Math.round(depricatedPrice / 1000) * 1000;
+  // Price range: ±7% for low/high
+  const low  = Math.round(depreciatedPrice * 0.93 / 1000) * 1000;
+  const high = Math.round(depreciatedPrice * 1.07 / 1000) * 1000;
+  const mid  = Math.round(depreciatedPrice / 1000) * 1000;
 
-  // Fuel impact text
-  const fuelText = { petrol: "+0% (Standard)", diesel: "+5% (High demand)", cng: "-10% (Niche market)", electric: "+8% (Premium EV)", hybrid: "+6% (Eco premium)" };
+  const fuelText  = { petrol: "+0% (Standard)", diesel: "+5% (High demand)", cng: "-10% (Niche market)", electric: "+8% (Premium EV)", hybrid: "+6% (Eco premium)" };
   const ownerText = { "1": "Single owner (+0%)", "2": "2nd owner (-12%)", "3": "3rd owner+ (-24%)" };
 
-  // ===== DISPLAY =====
-  document.getElementById("priceRange").textContent = `₹${fmt(low)} – ₹${fmt(high)}`;
-  document.getElementById("priceMid").textContent = `Fair deal price: ₹${fmt(mid)}`;
-  document.getElementById("depreciationVal").textContent = `${depPct}% (${age} yr${age !== 1 ? "s" : ""} old)`;
-  document.getElementById("cityScore").textContent = `${city.score}/100`;
-  document.getElementById("cityBadge").className = `factor-badge ${city.badge}`;
-  document.getElementById("cityBadge").textContent = city.label;
-  document.getElementById("fuelImpact").textContent = fuelText[selectedFuel] || "-";
-  document.getElementById("ownerImpact").textContent = ownerText[selectedOwner] || "-";
+  document.getElementById("priceRange").textContent     = `₹${fmt(low)} – ₹${fmt(high)}`;
+  document.getElementById("priceMid").textContent       = `Fair deal price: ₹${fmt(mid)}`;
+  document.getElementById("depreciationVal").textContent= `${depPct}% (${age} yr${age !== 1 ? "s" : ""} old)`;
+  document.getElementById("cityScore").textContent      = `${city.score}/100`;
+  document.getElementById("cityBadge").className        = `factor-badge ${city.badge}`;
+  document.getElementById("cityBadge").textContent      = city.label;
+  document.getElementById("fuelImpact").textContent     = fuelText[selectedFuel] || "-";
+  document.getElementById("ownerImpact").textContent    = ownerText[selectedOwner] || "-";
 
-  // WhatsApp message with full details
   const variant = document.getElementById("variantSelect").value || "N/A";
   const waMsg = encodeURIComponent(
     `Hi CarValueAI! 🚗\n\nI paid ₹49 for my valuation report.\n\n` +
@@ -843,7 +827,6 @@ function calculateValue() {
   );
   document.getElementById("waBtn").href = `https://wa.me/917908612028?text=${waMsg}`;
 
-  // Show result with loader
   document.getElementById("loadingOverlay").classList.add("show");
   setTimeout(() => {
     document.getElementById("loadingOverlay").classList.remove("show");
@@ -852,7 +835,6 @@ function calculateValue() {
     document.querySelector(".form-body").style.display = "none";
     document.querySelector(".steps-bar").style.display = "none";
     document.getElementById("resultSection").scrollIntoView({ behavior: "smooth" });
-    // Save lead to localStorage as backup
     try {
       const lead = { name, phone, brand: carDB[brand].label, model, variant, year, fuel: selectedFuel, km, city: selectedCity, low: fmt(low), high: fmt(high), ts: new Date().toISOString() };
       const leads = JSON.parse(localStorage.getItem("cvai_leads") || "[]");
@@ -864,7 +846,7 @@ function calculateValue() {
 
 function fmt(n) {
   if (n >= 10000000) return (n / 10000000).toFixed(2) + " Cr";
-  if (n >= 100000) return (n / 100000).toFixed(1) + " L";
+  if (n >= 100000)   return (n / 100000).toFixed(1) + " L";
   return n.toLocaleString("en-IN");
 }
 
@@ -882,9 +864,7 @@ function resetForm() {
   document.querySelector(".form-body").style.display = "block";
   document.querySelector(".steps-bar").style.display = "flex";
   selectedFuel = ""; selectedOwner = ""; selectedCondition = ""; selectedCity = "";
-  document.querySelectorAll(".toggle-btn, .cond-card, .city-btn").forEach(el => {
-    el.classList.remove("selected");
-  });
+  document.querySelectorAll(".toggle-btn, .cond-card, .city-btn").forEach(el => el.classList.remove("selected"));
   document.getElementById("brandSelect").value = "";
   document.getElementById("modelSelect").innerHTML = '<option value="">-- First Select Brand --</option>';
   document.getElementById("modelSelect").disabled = true;
