@@ -390,6 +390,21 @@
 </div>
 
 <script>
+// ===================== GOOGLE SHEET URL =====================
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbylaQYrrRG0cJ5SgYZtWdZD51eQHujv6HW3HzYf8IcdHstuilLKr8QQjKN2jJb1JsnT/exec";
+
+// ===================== SAVE TO GOOGLE SHEET =====================
+function saveToGoogleSheet(data) {
+  fetch(SHEET_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  }).catch(function(err) {
+    console.log("Sheet save error (non-critical):", err);
+  });
+}
+
 // ===================== CAR DATABASE =====================
 const carDB = {
   maruti: {
@@ -621,7 +636,6 @@ const carDB = {
   }
 };
 
-// City demand multipliers
 const cityDemand = {
   durgapur: { score: 72, label: "Moderate Demand", badge: "badge-orange", note: "Tier-2: decent demand for budget & mid-range" },
   asansol:  { score: 68, label: "Moderate Demand", badge: "badge-orange", note: "Tier-2: industrial city, diesel popular" },
@@ -638,7 +652,6 @@ const ownerMultiplier = { "1": 1.0, "2": 0.88, "3": 0.76 };
 
 let selectedFuel = "", selectedOwner = "", selectedCondition = "", selectedCity = "";
 
-// ===================== LOAD YEARS — 2000 to current =====================
 (function loadYears() {
   const sel = document.getElementById("yearSelect");
   const currentYear = new Date().getFullYear();
@@ -647,7 +660,6 @@ let selectedFuel = "", selectedOwner = "", selectedCondition = "", selectedCity 
   }
 })();
 
-// ===================== BRAND → MODEL =====================
 function loadModels() {
   const brand = document.getElementById("brandSelect").value;
   const modelSel = document.getElementById("modelSelect");
@@ -663,7 +675,6 @@ function loadModels() {
   modelSel.disabled = false;
 }
 
-// ===================== MODEL → VARIANT =====================
 function loadVariants() {
   const brand = document.getElementById("brandSelect").value;
   const model = document.getElementById("modelSelect").value;
@@ -729,7 +740,6 @@ function goStep3() {
   setActiveStep(3);
 }
 
-// ===================== VALUATION LOGIC — FIXED =====================
 function calculateValue() {
   const name = document.getElementById("userName").value.trim();
   const phone = document.getElementById("userPhone").value.trim();
@@ -738,66 +748,40 @@ function calculateValue() {
 
   const brand = document.getElementById("brandSelect").value;
   const model = document.getElementById("modelSelect").value;
+  const variant = document.getElementById("variantSelect").value || "N/A";
   const year = parseInt(document.getElementById("yearSelect").value);
   const km = parseInt(document.getElementById("kmSlider").value);
   const currentYear = new Date().getFullYear();
   const age = currentYear - year;
 
-  // Base price from DB
   let basePrice = carDB[brand]?.basePrices?.[model] || 700000;
 
-  // ===== FIXED DEPRECIATION — Realistic Indian Market =====
-  // Based on actual dealer transaction data (Tata Motors dealer insight)
-  // Year 0 (brand new registered same year): 5%
-  // Year 1: 15% cumulative
-  // Year 2: 23% cumulative
-  // Year 3: 30% cumulative
-  // Year 4: 36% cumulative
-  // Year 5: 42% cumulative
-  // Year 6+: ~6% per year additional, floor at 35% residual value
   let depPct = 0;
-  if (age <= 0) {
-    depPct = 5;
-  } else if (age === 1) {
-    depPct = 15;
-  } else if (age === 2) {
-    depPct = 23;
-  } else if (age === 3) {
-    depPct = 30;
-  } else if (age === 4) {
-    depPct = 36;
-  } else if (age === 5) {
-    depPct = 42;
-  } else {
-    // After 5 years: 6% per additional year, max depreciation = 65% (min 35% residual)
-    depPct = Math.min(65, 42 + (age - 5) * 6);
-  }
+  if (age <= 0)      { depPct = 5; }
+  else if (age === 1){ depPct = 15; }
+  else if (age === 2){ depPct = 23; }
+  else if (age === 3){ depPct = 30; }
+  else if (age === 4){ depPct = 36; }
+  else if (age === 5){ depPct = 42; }
+  else               { depPct = Math.min(65, 42 + (age - 5) * 6); }
 
   let depreciatedPrice = basePrice * (1 - depPct / 100);
 
-  // Condition multiplier
   const condMult = { excellent: 1.10, good: 1.0, fair: 0.88, poor: 0.74 };
   depreciatedPrice *= (condMult[selectedCondition] || 1.0);
-
-  // Fuel type multiplier
   depreciatedPrice *= (fuelMultiplier[selectedFuel] || 1.0);
-
-  // Owner multiplier
   depreciatedPrice *= (ownerMultiplier[selectedOwner] || 1.0);
 
-  // KM penalty — only kicks in above 60,000 km (realistic Indian usage: ~12k/yr)
   if (km > 60000) {
     const excessKm = km - 60000;
     const penaltyPct = Math.min(12, (excessKm / 10000) * 1.2);
     depreciatedPrice *= (1 - penaltyPct / 100);
   }
 
-  // City demand adjustment (range: 0.92 to 1.08)
   const city = cityDemand[selectedCity] || cityDemand["other"];
   const cityMult = 0.92 + (city.score / 100) * 0.16;
   depreciatedPrice *= cityMult;
 
-  // Price range: ±7% for low/high
   const low  = Math.round(depreciatedPrice * 0.93 / 1000) * 1000;
   const high = Math.round(depreciatedPrice * 1.07 / 1000) * 1000;
   const mid  = Math.round(depreciatedPrice / 1000) * 1000;
@@ -805,16 +789,15 @@ function calculateValue() {
   const fuelText  = { petrol: "+0% (Standard)", diesel: "+5% (High demand)", cng: "-10% (Niche market)", electric: "+8% (Premium EV)", hybrid: "+6% (Eco premium)" };
   const ownerText = { "1": "Single owner (+0%)", "2": "2nd owner (-12%)", "3": "3rd owner+ (-24%)" };
 
-  document.getElementById("priceRange").textContent     = `₹${fmt(low)} – ₹${fmt(high)}`;
-  document.getElementById("priceMid").textContent       = `Fair deal price: ₹${fmt(mid)}`;
-  document.getElementById("depreciationVal").textContent= `${depPct}% (${age} yr${age !== 1 ? "s" : ""} old)`;
-  document.getElementById("cityScore").textContent      = `${city.score}/100`;
-  document.getElementById("cityBadge").className        = `factor-badge ${city.badge}`;
-  document.getElementById("cityBadge").textContent      = city.label;
-  document.getElementById("fuelImpact").textContent     = fuelText[selectedFuel] || "-";
-  document.getElementById("ownerImpact").textContent    = ownerText[selectedOwner] || "-";
+  document.getElementById("priceRange").textContent      = `₹${fmt(low)} – ₹${fmt(high)}`;
+  document.getElementById("priceMid").textContent        = `Fair deal price: ₹${fmt(mid)}`;
+  document.getElementById("depreciationVal").textContent = `${depPct}% (${age} yr${age !== 1 ? "s" : ""} old)`;
+  document.getElementById("cityScore").textContent       = `${city.score}/100`;
+  document.getElementById("cityBadge").className         = `factor-badge ${city.badge}`;
+  document.getElementById("cityBadge").textContent       = city.label;
+  document.getElementById("fuelImpact").textContent      = fuelText[selectedFuel] || "-";
+  document.getElementById("ownerImpact").textContent     = ownerText[selectedOwner] || "-";
 
-  const variant = document.getElementById("variantSelect").value || "N/A";
   const waMsg = encodeURIComponent(
     `Hi CarValueAI! 🚗\n\nI paid ₹49 for my valuation report.\n\n` +
     `📋 Car: ${carDB[brand].label} ${model} ${variant}\n` +
@@ -827,6 +810,23 @@ function calculateValue() {
   );
   document.getElementById("waBtn").href = `https://wa.me/917908612028?text=${waMsg}`;
 
+  // ===== GOOGLE SHEET MEIN SAVE KARO =====
+  const sheetData = {
+    name: name,
+    phone: phone,
+    brand: carDB[brand].label,
+    model: model,
+    variant: variant,
+    year: year,
+    fuel: selectedFuel,
+    owner: selectedOwner,
+    km: km + " km",
+    city: selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1),
+    condition: selectedCondition,
+    price: "Rs." + fmt(low) + " - Rs." + fmt(high)
+  };
+  saveToGoogleSheet(sheetData);
+
   document.getElementById("loadingOverlay").classList.add("show");
   setTimeout(() => {
     document.getElementById("loadingOverlay").classList.remove("show");
@@ -835,12 +835,6 @@ function calculateValue() {
     document.querySelector(".form-body").style.display = "none";
     document.querySelector(".steps-bar").style.display = "none";
     document.getElementById("resultSection").scrollIntoView({ behavior: "smooth" });
-    try {
-      const lead = { name, phone, brand: carDB[brand].label, model, variant, year, fuel: selectedFuel, km, city: selectedCity, low: fmt(low), high: fmt(high), ts: new Date().toISOString() };
-      const leads = JSON.parse(localStorage.getItem("cvai_leads") || "[]");
-      leads.push(lead);
-      localStorage.setItem("cvai_leads", JSON.stringify(leads));
-    } catch(e) {}
   }, 2200);
 }
 
